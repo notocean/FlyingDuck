@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27eea4f72dd2a924698cdfc816a940b1, type: 3}
+  m_Name: LevelManager
+  m_EditorClassIdentifier: 
+  currentLevelIndex: 0
+  maxActiveLevelIndex: 0
+  maxAvaiableLevelIndex: 0
+  levelUISprites:
+  - {fileID: 11400000, guid: c6c94ad5d0c116849b57e6da12cdf739, type: 2}
+  - {fileID: 11400000, guid: fa3e7771f2231e5419c467a725518f94, type: 2}
+  - {fileID: 11400000, guid: 06b39696ff70baa429b2904e3c8a89f7, type: 2}
+  defaultLevelData:
+  - {fileID: 11400000, guid: 39ffb929a0aa0854592a8683f012a0f9, type: 2}
+  - {fileID: 11400000, guid: 55efcdb0dcadac84a82f75f03d7248bd, type: 2}
+  - {fileID: 11400000, guid: fe8e3083c69cf2e4d98e7518f0608ad0, type: 2}
+  levelData:
+  - {fileID: 11400000, guid: e2515abb92e8e4841a580d9653ef2e02, type: 2}
+  - {fileID: 11400000, guid: d69f0b109ff00494cae835296ff6eff5, type: 2}
+  - {fileID: 11400000, guid: bf056145b73d0fd40a17eb0dc757fa3c, type: 2}
+  levelSelectedChanged:
+    m_PersistentCalls:
+      m_Calls: []

@@ -1,0 +1,208 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 507d5f522ace1c64b8d0f534b7bf3182, type: 3}
+  m_Name: DefaultLevelData 0
+  m_EditorClassIdentifier: 
+  duckData:
+    pos: {x: -0.068, y: 0.577}
+    viewDir: 1
+    velocity: {x: 0, y: 0}
+    energy: 0
+  tileData:
+    keys:
+    - Tile 29
+    - Tile 30
+    - Tile 31
+    - Tile 39
+    - Tile 44
+    - Tile 48
+    - Tile 51
+    - Tile 52
+    - Tile 54
+    - Tile 55
+    - Tile 58
+    - Tile 59
+    - Tile 60
+    - Tile 62
+    - Tile 63
+    - Tile 64
+    - Tile 65
+    - Tile 66
+    - Tile 67
+    - Tile 69
+    - Tile 70
+    values:
+    - data:
+        rid: 6126503423074632196
+    - data:
+        rid: 6126503423074632197
+    - data:
+        rid: 6126503423074632198
+    - data:
+        rid: 6126503423074632199
+    - data:
+        rid: 6126503423074632200
+    - data:
+        rid: 6126503423074632201
+    - data:
+        rid: 6126503423074632202
+    - data:
+        rid: 6126503423074632203
+    - data:
+        rid: 6126503423074632204
+    - data:
+        rid: 6126503423074632205
+    - data:
+        rid: 6126503423074632206
+    - data:
+        rid: 6126503423074632207
+    - data:
+        rid: 6126503423074632208
+    - data:
+        rid: 6126503423074632209
+    - data:
+        rid: 6126503423074632210
+    - data:
+        rid: 6126503423074632211
+    - data:
+        rid: 6126503423074632212
+    - data:
+        rid: 6126503423074632213
+    - data:
+        rid: 6126503423074632214
+    - data:
+        rid: 6126503423074632215
+    - data:
+        rid: 6126503423074632216
+  animalData:
+    keys:
+    - Animal 1
+    - Animal 2
+    - Animal 3
+    - Animal 4
+    - Animal 5
+    - Animal 6
+    - Animal 7
+    - Animal 8
+    - Animal 9
+    values:
+    - data:
+        rid: 6126503423074632217
+    - data:
+        rid: 6126503423074632218
+    - data:
+        rid: 6126503423074632219
+    - data:
+        rid: 6126503423074632220
+    - data:
+        rid: 6126503423074632221
+    - data:
+        rid: 6126503423074632222
+    - data:
+        rid: 6126503423074632223
+    - data:
+        rid: 6126503423074632224
+    - data:
+        rid: 6126503423074632225
+  references:
+    version: 2
+    RefIds:
+    - rid: 6126503423074632196
+      type: {class: BrokenTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 6126503423074632197
+      type: {class: BrokenTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 6126503423074632198
+      type: {class: BrokenTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 6126503423074632199
+      type: {class: BrokenTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 6126503423074632200
+      type: {class: BrokenTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 6126503423074632201
+      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 6126503423074632202
+      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 6126503423074632203
+      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 6126503423074632204
+      type: {class: BrokenTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 6126503423074632205
+      type: {class: BrokenTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 6126503423074632206
+      type: {class: BrokenTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 6126503423074632207
+      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 6126503423074632208
+      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 6126503423074632209
+      type: {class: BrokenTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 6126503423074632210
+      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 6126503423074632211
+      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 6126503423074632212
+      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 6126503423074632213
+      type: {class: BrokenTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 6126503423074632214
+      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 6126503423074632215
+      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 6126503423074632216
+      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 6126503423074632217
+      type: {class: WormData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 6126503423074632218
+      type: {class: WormData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 6126503423074632219
+      type: {class: WormData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 6126503423074632220
+      type: {class: WormData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 6126503423074632221
+      type: {class: WormData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 6126503423074632222
+      type: {class: WormData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 6126503423074632223
+      type: {class: WormData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 6126503423074632224
+      type: {class: WormData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 6126503423074632225
+      type: {class: WormData, ns: , asm: Assembly-CSharp}
+      data: 

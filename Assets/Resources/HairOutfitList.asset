@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16793393a946deb45a729fac714c085f, type: 3}
+  m_Name: HairOutfitList
+  m_EditorClassIdentifier: Assembly-CSharp::HairOutfitList
+  hairOutfits:
+  - {fileID: 11400000, guid: 7ea2b4edb01de714ba7ea07849efaabf, type: 2}
+  - {fileID: 11400000, guid: 1b05125da59cd394ea78f432abbc44d8, type: 2}
+  - {fileID: 11400000, guid: 7737f81e462f5d54ba311f8eae0a2928, type: 2}
+  - {fileID: 11400000, guid: c4c032966ded186458377de6cf571022, type: 2}
+  - {fileID: 11400000, guid: de3b5cdaeceed1f48989f94f7aec0b5a, type: 2}
+  - {fileID: 11400000, guid: 4c2ed743544cf93469a4e1ca836a4a22, type: 2}
+  currentHairIndex: 0
+  hairOutfitChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  hairOutfitActived:
+    m_PersistentCalls:
+      m_Calls: []

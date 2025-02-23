@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c0e324573d2a1846b98fc9d024dfc14, type: 3}
+  m_Name: LevelSprite 0
+  m_EditorClassIdentifier: 
+  topSprite: {fileID: 21300000, guid: 9ce03fc0339e6a142a87297fa37c170c, type: 3}
+  centerSprite: {fileID: 21300000, guid: fdc91c5c4dfc67a42904bd5f31146496, type: 3}
+  leftSprite: {fileID: 21300000, guid: 82dc474b85775754a9043615f3320c3b, type: 3}
+  rightSprite: {fileID: 21300000, guid: 093c9e958617f9b488a737133b4f5d47, type: 3}

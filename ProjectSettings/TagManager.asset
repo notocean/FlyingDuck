@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - PopupCanvas
+  - PlayerFoot
+  - Tile
+  - Animal
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Ground
+  - Player
+  - Animal
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 3535153775
+    locked: 0
+  - name: GroundTile
+    uniqueID: 1089824119
+    locked: 0
+  - name: Animal
+    uniqueID: 3063228427
+    locked: 0
+  - name: UI
+    uniqueID: 1594086511
+    locked: 0
+  - name: Player
+    uniqueID: 1014582157
+    locked: 0
+  - name: Item
+    uniqueID: 2793114775
+    locked: 0
+  - name: UI1
+    uniqueID: 839408467
+    locked: 0

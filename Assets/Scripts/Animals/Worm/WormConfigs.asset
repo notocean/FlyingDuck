@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69c8d2971bdd96941a582f7b959e25d2, type: 3}
+  m_Name: WormConfigs
+  m_EditorClassIdentifier: 
+  forwardDetect: {x: -0.23, y: -0.3}
+  offset: {x: 0.15, y: 0.15}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 192
+  obstacleLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  moveSpeed: 0.1
+  waitToMoveTime: 3
+  food: 1
+  timeToRefresh: 15
+  showCollectedDialogPrefab: {fileID: 618523810369600468, guid: 657fce0c956d6dd4f8a11ae7269616e7, type: 3}

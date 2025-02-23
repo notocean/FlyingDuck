@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: dc54a10a863d1f1409eba5797afad1f0
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - energyValueImage: {instanceID: 0}
+  - noFullEnergySprite: {instanceID: 0}
+  - fullEnergySprite: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

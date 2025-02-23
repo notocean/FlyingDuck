@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cea1300036524d14b8bf1f82f2f5cbb1, type: 3}
+  m_Name: GameSettings
+  m_EditorClassIdentifier: 
+  centerOfWorld: 0
+  minHorizontalWorld: -5
+  maxHorizontalWorld: 5
+  holdPoint: 0.3
+  onMusicValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  musicValue: 0.25
+  onVfxValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  vfxValue: 0.25
+  isTutorial: 1

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37141b12cbcc3a84eb23d483e5bfadc4, type: 3}
+  m_Name: PharmaceuticalList
+  m_EditorClassIdentifier: 
+  pharmaceuticals:
+  - {fileID: 11400000, guid: 0e8144967dc31ce45a8c50339e40a612, type: 2}
+  - {fileID: 11400000, guid: de16ed3b05b0dff4fa9403705dfb41e2, type: 2}
+  - {fileID: 11400000, guid: 289005daf7f4d734284dab935c402114, type: 2}
+  currentPharmaceuticalIndex: 0
+  pharmaceuticalChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  usePharmaceuticalEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  isActiveEvent:
+    m_PersistentCalls:
+      m_Calls: []
