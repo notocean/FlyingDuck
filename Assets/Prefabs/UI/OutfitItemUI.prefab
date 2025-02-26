@@ -144,7 +144,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -894337502, guid: d4212b4a1a7038d4985e7da843edb76e, type: 3}
+  m_Sprite: {fileID: 687162003, guid: a8f5ec4a2c4d011499941fa5498e2e05, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -222,8 +222,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e3cf97382150dd4382a6c58428693cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalSprite: {fileID: -894337502, guid: d4212b4a1a7038d4985e7da843edb76e, type: 3}
-  selectedSprite: {fileID: 840270828, guid: d4212b4a1a7038d4985e7da843edb76e, type: 3}
+  normalSprite: {fileID: 687162003, guid: a8f5ec4a2c4d011499941fa5498e2e05, type: 3}
+  selectedSprite: {fileID: -1546609090, guid: a8f5ec4a2c4d011499941fa5498e2e05, type: 3}
   outfitImage: {fileID: 6773211639727460361}
 --- !u!114 &2444047475082858976
 MonoBehaviour:

@@ -14,7 +14,7 @@ public class BuyButton : HidableButton {
     }
 
     private void SelectPharmaceuticalHandle(int index = 0) {
-        if (PlayerData.Instance.Food >= PharmaceuticalList.Instance.GetCurrentPharmaceutical().price) {
+        if (PlayerDataManager.Instance.Food >= PharmaceuticalList.Instance.GetCurrentPharmaceutical().price) {
             SetVisual(true);
         }
         else SetVisual(false);

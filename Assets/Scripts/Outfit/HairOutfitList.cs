@@ -38,14 +38,12 @@ public class HairOutfitList : DataManager {
     public void SetOutfit(int index) {
         currentHairIndex = index;
         hairOutfitChanged.Invoke();
-        //Save();
     }
 
     [HideInInspector] public UnityEvent<int> hairOutfitActived = new UnityEvent<int>();
     public void SetActive(int index) {
         hairOutfits[index].isActive = true;
         hairOutfitActived.Invoke(index);
-        //Save();
     }
 
     public override void Save() {

@@ -6,14 +6,14 @@ using UnityEngine;
 public class ImmunePharmaceutical : Pharmaceutical
 {
     public override void ApplyEffect(GameObject target) {
-        DuckInfor duckInfor = target.GetComponent<DuckInfor>();
+        PlayerInfor duckInfor = target.GetComponent<PlayerInfor>();
         if (duckInfor != null) {
             duckInfor.SetImmune(true);
         }
     }
 
     public override void EndEffect(GameObject target) {
-        DuckInfor duckInfor = target.GetComponent<DuckInfor>();
+        PlayerInfor duckInfor = target.GetComponent<PlayerInfor>();
         if (duckInfor != null) {
             duckInfor.SetImmune(false);
         }

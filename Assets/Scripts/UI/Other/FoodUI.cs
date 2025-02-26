@@ -56,11 +56,11 @@ public class FoodUI : MonoBehaviour
     }
 
     private void OnEnable() {
-        SetFood(PlayerData.Instance.Food);
-        PlayerData.Instance.foodChanged.AddListener(SetFood);
+        SetFood(PlayerDataManager.Instance.Food);
+        PlayerDataManager.Instance.foodChanged.AddListener(SetFood);
     }
 
     private void OnDisable() {
-        PlayerData.Instance.foodChanged.RemoveListener(SetFood);
+        PlayerDataManager.Instance.foodChanged.RemoveListener(SetFood);
     }
 }

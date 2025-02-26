@@ -34,12 +34,10 @@ public class LevelManager : DataManager {
             currentLevelIndex = index;
             levelSelectedChanged.Invoke();
         }
-        //SaveGeneral();
     }
 
     public void IncreaseMaxActiveLevel() {
         maxActiveLevelIndex = Mathf.Clamp(maxActiveLevelIndex + 1, 0, levelUISprites.Count);
-        //SaveGeneral();
     }
 
     public LevelSprite GetCurrentLevelSprite() {
@@ -59,7 +57,7 @@ public class LevelManager : DataManager {
     }
 
     public void ResetLevel() {
-        levelData[currentLevelIndex].duckData = defaultLevelData[currentLevelIndex].duckData;
+        levelData[currentLevelIndex].playerData = defaultLevelData[currentLevelIndex].playerData;
         levelData[currentLevelIndex].tileData = defaultLevelData[currentLevelIndex].tileData;
         levelData[currentLevelIndex].animalData = defaultLevelData[currentLevelIndex].animalData;
     }
@@ -69,7 +67,7 @@ public class LevelManager : DataManager {
     }
 
     public void SaveLevel(int i) {
-        SaveLoadManager.Save(new LevelJsonData(levelData[i].isSave, levelData[i].duckData, levelData[i].tileData, levelData[i].animalData), $"{levelData[i].name}");
+        SaveLoadManager.Save(new LevelJsonData(levelData[i].isSave, levelData[i].playerData, levelData[i].tileData, levelData[i].animalData), $"{levelData[i].name}");
     }
 
     public override void Save() {
@@ -94,7 +92,7 @@ public class LevelManager : DataManager {
             if (data != null) {
                 if (data is LevelJsonData levelJsonData) {
                     levelData[i].isSave = levelJsonData.isSave;
-                    levelData[i].duckData = levelJsonData.duckData;
+                    levelData[i].playerData = levelJsonData.playerData;
                     levelData[i].tileData = levelJsonData.tileData;
                     levelData[i].animalData = levelJsonData.animalData;
                 }
@@ -122,13 +120,13 @@ public class LevelGeneralData : Data {
 
 public class LevelJsonData : Data {
     public bool isSave { get; }
-    public DuckData duckData { get; }
+    public PlayerData playerData { get; }
     public SerializableDictionary<string, TileDataWrapper> tileData { get; }
     public SerializableDictionary<string, AnimalDataWrapper> animalData { get; }
 
-    public LevelJsonData(bool isSave, DuckData duckData, SerializableDictionary<string, TileDataWrapper> tileData, SerializableDictionary<string, AnimalDataWrapper> animalData) {
+    public LevelJsonData(bool isSave, PlayerData playerData, SerializableDictionary<string, TileDataWrapper> tileData, SerializableDictionary<string, AnimalDataWrapper> animalData) {
         this.isSave = isSave;
-        this.duckData = duckData;
+        this.playerData = playerData;
         this.tileData = tileData;
         this.animalData = animalData;
     }

@@ -10,21 +10,21 @@ public class StatPharmaceutical : Pharmaceutical
     float flyForceTmp;
 
     public override void ApplyEffect(GameObject target) {
-        DuckMovement duckMovement = target.GetComponent<DuckMovement>();
-        if (duckMovement != null) {
-            walkSpeedTmp = duckMovement.GetWalkSpeed();
-            flyForceTmp = duckMovement.GetFlyForce();
+        PlayerController playerController = target.GetComponent<PlayerController>();
+        if (playerController != null) {
+            walkSpeedTmp = playerController.GetWalkSpeed();
+            flyForceTmp = playerController.GetFlyForce();
 
-            duckMovement.SetWalkSpeed(walkSpeedTmp + walkSpeedTmp * (float)increasePercent / 100);
-            duckMovement.SetFlyForce(flyForceTmp + flyForceTmp * (float)increasePercent / 100);
+            playerController.SetWalkSpeed(walkSpeedTmp + walkSpeedTmp * (float)increasePercent / 100);
+            playerController.SetFlyForce(flyForceTmp + flyForceTmp * (float)increasePercent / 100);
         }
     }
 
     public override void EndEffect(GameObject target) {
-        DuckMovement duckMovement = target.GetComponent<DuckMovement>();
-        if (duckMovement != null) {
-            duckMovement.SetWalkSpeed(walkSpeedTmp);
-            duckMovement.SetFlyForce(flyForceTmp);
+        PlayerController playerController = target.GetComponent<PlayerController>();
+        if (playerController != null) {
+            playerController.SetWalkSpeed(walkSpeedTmp);
+            playerController.SetFlyForce(flyForceTmp);
         }
     }
 }

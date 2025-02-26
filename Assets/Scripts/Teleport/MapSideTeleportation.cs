@@ -1,9 +1,12 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class MapSideTeleportation : MonoBehaviour, ITeleportation
+public class MapSideTeleportation : MonoBehaviour
 {
-    public ITeleportable teleportableObj { get; private set; }
-    private Transform playerTrans;
+    [SerializeField] MapSideTeleportEvent mapSideTeleportEvent;
+
+    List<Transform> teleportableTransforms = new List<Transform>();
     Vector2 pos;
 
     float minHorizontalWorld;
@@ -11,24 +14,29 @@ public class MapSideTeleportation : MonoBehaviour, ITeleportation
 
     bool shouldWarp;
 
-    private void Start() {
-        GameObject player = GameManager.Instance.Player;
-        if (player != null) {
-            playerTrans = player.transform;
-            teleportableObj = player.GetComponent<DuckMovement>();
-        }
+    private void Awake() {
         minHorizontalWorld = GameSettings.Instance.minHorizontalWorld;
         maxHorizontalWorld = GameSettings.Instance.maxHorizontalWorld;
     }
 
+    private void RegisterTeleportableObject(Transform transform) {
+        if (transform.GetComponent<ITeleportable>() != null) {
+            teleportableTransforms.Add(transform);
+        }
+    }
+
     private void FixedUpdate() {
-        pos = playerTrans.position;
-        if (pos.x >= maxHorizontalWorld) 
-            WarpHorizontal(minHorizontalWorld + pos.x - maxHorizontalWorld);
-        if (pos.x < minHorizontalWorld) 
-            WarpHorizontal(maxHorizontalWorld - minHorizontalWorld + pos.x);
-        if (shouldWarp)
-            Teleport();
+        foreach (Transform t in teleportableTransforms) {
+            pos = t.position;
+            if (pos.x >= maxHorizontalWorld)
+                WarpHorizontal(minHorizontalWorld + pos.x - maxHorizontalWorld);
+            if (pos.x < minHorizontalWorld)
+                WarpHorizontal(maxHorizontalWorld - minHorizontalWorld + pos.x);
+            if (shouldWarp) {
+                t.GetComponent<ITeleportable>().Teleport(pos);
+                shouldWarp = false;
+            }
+        }
     }
 
     private void WarpHorizontal(float newX) {
@@ -36,8 +44,11 @@ public class MapSideTeleportation : MonoBehaviour, ITeleportation
         shouldWarp = true;
     }
 
-    public void Teleport() {
-        teleportableObj.Teleport(pos);
-        shouldWarp = false;
+    private void OnEnable() {
+        mapSideTeleportEvent.RegisterEvent.AddListener(RegisterTeleportableObject);
+    }
+
+    private void OnDisable() {
+        mapSideTeleportEvent.RegisterEvent.RemoveListener(RegisterTeleportableObject);
     }
 }

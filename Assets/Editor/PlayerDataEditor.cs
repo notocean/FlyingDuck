@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(PlayerData))]
+[CustomEditor(typeof(PlayerDataManager))]
 public class PlayerDataEditor : Editor {
     public override void OnInspectorGUI() {
         base.OnInspectorGUI();
 
-        PlayerData playerData = (PlayerData)target;
+        PlayerDataManager playerData = (PlayerDataManager)target;
         if (GUILayout.Button("Save")) {
             playerData.Save();
         }

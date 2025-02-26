@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Diagnostics;
 
 [Serializable]
 public struct MovingPoint {
@@ -28,7 +29,7 @@ public class RepeatMovingTile : Tile
     float movingTime;
 
     Vector2 velocity = Vector2.zero;
-    DuckMovement player;
+    PlayerController player;
 
     private void Awake() {
         rb2d = GetComponent<Rigidbody2D>();
@@ -81,7 +82,7 @@ public class RepeatMovingTile : Tile
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.CompareTag("PlayerFoot")) {
-            player = collision.GetComponentInParent<DuckMovement>();
+            player = collision.GetComponentInParent<PlayerController>();
             if (player != null) {
                 player.SetGroundVelocity(velocity);
             }

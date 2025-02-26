@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
                 }
             }
 
-            Player.GetComponent<DuckInfor>().SetDuckData(levelData.duckData);
+            Player.GetComponent<PlayerController>().SetPlayerData(levelData.playerData);
         }
     }
 
@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
             return;
         LevelData levelData = levelManager.GetCurrentLevelData();
         levelData.isSave = true;
-        levelData.duckData = Player.GetComponent<DuckInfor>().GetDuckData();
+        levelData.playerData = Player.GetComponent<PlayerController>().GetPlayerData();
 
         if (levelDataManager != null) {
             levelData.tileData.Clear();

@@ -29,8 +29,8 @@ public class LevelDataEditor : Editor {
         int sceneIndex = EditorSceneManager.GetActiveScene().buildIndex;
 
         // update duck data
-        defaultLevelDataList[sceneIndex - 1].duckData = player.GetComponent<DuckInfor>().GetDuckData();
-        levelDataList[sceneIndex - 1].duckData = player.GetComponent<DuckInfor>().GetDuckData();
+        //defaultLevelDataList[sceneIndex - 1].duckData = player.GetComponent<PlayerInfor>().GetDuckData();
+        //levelDataList[sceneIndex - 1].duckData = player.GetComponent<PlayerInfor>().GetDuckData();
 
         // update tiles data
         defaultLevelDataList[sceneIndex - 1].tileData.Clear();

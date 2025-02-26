@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 68941c8982eca524a80b228102b7d885
+guid: 26ea22007f71d2848b8524368508bde7
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,64 +110,64 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Frame 0
+      name: Slider_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 128
+        y: 68
         width: 128
-        height: 128
+        height: 60
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 40, y: 30, z: 40, w: 60}
+      border: {x: 30, y: 25, z: 30, w: 25}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1aeac40dc78e56d468d122686929ce87
-      internalID: 475707593
+      spriteID: 8b3c757e0e950d048a34c146c87c897b
+      internalID: 665928380
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Frame 1
+      name: Slider_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 8
+        width: 128
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 30, y: 25, z: 30, w: 25}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f36cf0bdc72ffa346a6910129dbc6a8e
+      internalID: -688132040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Slider_2
       rect:
         serializedVersion: 2
         x: 128
-        y: 128
+        y: 8
         width: 128
-        height: 128
+        height: 60
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 40, y: 30, z: 40, w: 60}
+      border: {x: 30, y: 25, z: 30, w: 25}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c1b5194113cc084448a338ac821a4504
-      internalID: -1228040143
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Frame 2
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 30, y: 30, z: 30, w: 30}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: dc5ef0e58db6c3141a10f4089c83e3d2
-      internalID: 479616869
+      spriteID: ca231c50051e16342ad13c3c1c5b5115
+      internalID: -1891087097
       vertices: []
       indices: 
       edges: []
@@ -183,9 +183,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Frame 0: 475707593
-      Frame 1: -1228040143
-      Frame 2: 479616869
+      Slider_0: 665928380
+      Slider_1: -688132040
+      Slider_2: -1891087097
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

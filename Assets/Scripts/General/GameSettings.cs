@@ -33,7 +33,6 @@ public class GameSettings : DataManager {
         get { return musicValue; }
         set {
             musicValue = Mathf.Clamp(value, 0, 1);
-            //Save();
             onMusicValueChanged.Invoke();
         }
     }
@@ -48,7 +47,6 @@ public class GameSettings : DataManager {
         get { return vfxValue; }
         set {
             vfxValue = Mathf.Clamp(value, 0, 1);
-            //Save();
             onVfxValueChanged.Invoke();
         }
     }
@@ -60,7 +58,6 @@ public class GameSettings : DataManager {
         get { return isTutorial; }
         set {
             isTutorial = value;
-            //Save();
         }
     }
 

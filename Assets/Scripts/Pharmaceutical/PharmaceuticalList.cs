@@ -52,7 +52,7 @@ public class PharmaceuticalList : DataManager {
     }
 
     public void Buy() {
-        PlayerData.Instance.Food -= pharmaceuticals[currentPharmaceuticalIndex].price;
+        PlayerDataManager.Instance.Food -= pharmaceuticals[currentPharmaceuticalIndex].price;
         pharmaceuticals[currentPharmaceuticalIndex].count++;
         pharmaceuticalChanged.Invoke(currentPharmaceuticalIndex);
     }

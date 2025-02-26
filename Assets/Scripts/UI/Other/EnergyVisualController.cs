@@ -5,17 +5,17 @@ public class EnergyVisualController : MonoBehaviour
 {
     [SerializeField] Image energyValueImage;
 
-    DuckInfor duckInfor;
+    PlayerVisual playerVisual;
     float maxEnergy;
 
     private void Start() {
         GameObject player = GameManager.Instance.Player;
         if (player != null) {
-            duckInfor = player.GetComponent<DuckInfor>();
+            playerVisual = player.GetComponent<PlayerVisual>();
 
-            if (duckInfor != null) {
-                maxEnergy = duckInfor.GetMaxEnergy();
-                duckInfor.energyChanged.AddListener(ShowEnergy);
+            if (playerVisual != null) {
+                maxEnergy = playerVisual.playerInfor.MaxEnergy;
+                playerVisual.energyVisualEvent.AddListener(ShowEnergy);
             }
         }
     }

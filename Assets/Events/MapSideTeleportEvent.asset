@@ -9,19 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cea1300036524d14b8bf1f82f2f5cbb1, type: 3}
-  m_Name: GameSettings
+  m_Script: {fileID: 11500000, guid: 93e45599e7713524b83a9457e54c76a3, type: 3}
+  m_Name: MapSideTeleportEvent
   m_EditorClassIdentifier: 
-  centerOfWorld: 0
-  minHorizontalWorld: -5
-  maxHorizontalWorld: 5
-  holdPoint: 0.3
-  onMusicValueChanged:
+  Event:
     m_PersistentCalls:
       m_Calls: []
-  musicValue: 0
-  onVfxValueChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  vfxValue: 0
-  isTutorial: 0
