@@ -18883,6 +18883,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wingsFlapAudioClip: {fileID: 8300000, guid: 9ab1bc69a36528949a0e897a29b89b15, type: 3}
   walkAudioClip: {fileID: 8300000, guid: 72af06d9467fcf7449d639d9f2cfb969, type: 3}
+  minWalkAnimationSpeed: 0.7
+  flyAnim: {fileID: 7400000, guid: c31ef6729d918494d9d91fdb19b09135, type: 2}
+  timeToSkipFlyAnimation: 0.05
+  skipFlyAnimationFactor: 0.65
   energyVisualEvent:
     m_PersistentCalls:
       m_Calls: []

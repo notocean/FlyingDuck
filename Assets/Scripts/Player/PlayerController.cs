@@ -47,81 +47,13 @@ public class PlayerController : MonoBehaviour, ITeleportable
         }
     }
 
-    //void HandleJoystickState(JoystickState joystickState, float holdTime) {
-    //    switch (joystickState) {
-    //        case JoystickState.Hold:
-    //            if (playerInfor.OnGround)
-    //                Walk();
-    //            break;
-    //        case JoystickState.Release:
-    //            if (playerInfor.IsWalk)
-    //                StopWalk();
-    //            break;
-    //        default:
-    //            break;
-    //    }
-    //}
-
-    //void HandleInput(Vector2 input) {
-    //    directionMove = input;
-    //    if (input.x != 0)
-    //        playerInfor.SetMoveDir(input.x > 0 ? -1 : 1);
-
-    //}
-
-    public void HandleCharacterInput(JoystickState joystickState, Vector2 input) {
-        // use when duck moving on ground
-        // resolve a problem about releasing a button but another button being held was stopped, duck stop moving
-        //if (joystickState == JoystickState.Release) {
-        //    if (playerInfor.MoveDir * input.x < 0)
-        //        return;
-        //}
-
-        
-        
-
-
-        //if (buttonState == ButtonState.Release) {
-        //    if (playerInfor.MoveDir != (int)buttonType)
-        //        return;
-        //}
-
-        //// rotate duck 
-        //moveFly = (int)buttonType;
-        //if (moveFly != 0) {
-        //    playerInfor.SetMoveDir(moveFly);
-        //}
-
-        //switch (buttonState) {
-        //    case ButtonState.Tap:
-        //        if (playerInfor.Energy >= 1f) {
-        //            Fly();
-        //        }
-        //        break;
-        //    case ButtonState.Hold:
-        //        if (playerInfor.OnGround && moveFly != 0) {
-        //            Walk();
-        //        }
-        //        break;
-        //    case ButtonState.Release:
-        //        if (playerInfor.IsWalk) {
-        //            StopWalk();
-        //        }
-        //        break;
-        //    default:
-        //        break;
-        //}
-    }
-
     public void Walk(Vector2 dirMove) {
         playerInfor.SetMoveDir(dirMove.x == 0 ? playerInfor.MoveDir : dirMove.x > 0 ? -1 : 1);
         directionMove = dirMove;
         transform.localScale = new Vector3(playerInfor.MoveDir, 1, 1);
 
-        if (!playerInfor.IsWalk) {
-            playerInfor.SetIsWalk(true);
-            playerVisual.UpdateVisualWalk();
-        }
+        playerInfor.SetIsWalk(true);
+        playerVisual.UpdateVisualWalk(directionMove.x);
     }
 
     public void StopWalk() {
