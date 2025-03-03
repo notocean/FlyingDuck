@@ -68,7 +68,8 @@ public class RepeatMovingTile : Tile
         velocity = (endPos - startPos) / movingTime + Vector2.down;
 
         if (player != null) {
-            player.SetGroundVelocity(velocity);
+            player.RemoveVelocityModifier(name);
+            player.AddVelocityModifier(name, velocity);
         }
     }
 
@@ -84,7 +85,7 @@ public class RepeatMovingTile : Tile
         if (collision.CompareTag("PlayerFoot")) {
             player = collision.GetComponentInParent<PlayerController>();
             if (player != null) {
-                player.SetGroundVelocity(velocity);
+                player.AddVelocityModifier(name, velocity);
             }
         }
     }
@@ -92,7 +93,7 @@ public class RepeatMovingTile : Tile
     private void OnTriggerExit2D(Collider2D collision) {
         if (collision.CompareTag("PlayerFoot")) {
             if (player != null) {
-                player.SetGroundVelocity(Vector2.zero);
+                player.RemoveVelocityModifier(name);
                 player = null;
             }
         }

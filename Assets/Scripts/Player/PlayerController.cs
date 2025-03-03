@@ -10,8 +10,16 @@ public class PlayerController : MonoBehaviour, ITeleportable
 
     [SerializeField] MapSideTeleportEvent mapSideTeleportEvent;
     [SerializeField] GroundCheck groundCheck;
-    Vector2 groundVelocity = Vector2.zero;
+
+    List<KeyValuePair<string, Vector2>> velocityModifiers = new List<KeyValuePair<string, Vector2>>();
+    Vector2 externalVelocity = Vector2.zero;
+
     Vector2 directionMove;
+
+    [SerializeField] float flashTime;
+    [SerializeField] float flashSpeed;
+    float flashTimer = 0f;
+    bool isFlash = false;
 
     Rigidbody2D rb2d;
 
@@ -31,33 +39,39 @@ public class PlayerController : MonoBehaviour, ITeleportable
     }
 
     private void FixedUpdate() {
-        if (playerInfor.OnGround) {
-            //Vector2 velocity = Vector2.zero;
-            //velocity += groundVelocity;
-            //if (playerInfor.IsWalk) {
-            //    velocity += new Vector2(playerInfor.MoveDir * playerInfor.WalkSpeed, 0);
-            //}
-            //rb2d.velocity = velocity;
+        Vector2 velocity = externalVelocity;
 
-            Vector2 velocity = Vector2.zero;
+        if (playerInfor.OnGround) {
             if (playerInfor.IsWalk) {
-                velocity = new Vector2(directionMove.x * playerInfor.WalkSpeed, 0);
+                velocity += new Vector2(directionMove.x * playerInfor.WalkSpeed, 0);
             }
             rb2d.velocity = velocity;
+        }
+        else {
+            // if there is external force then set velocity
+            if (velocity.magnitude > 0) {
+                rb2d.velocity = velocity;
+            }
         }
     }
 
     public void Walk(Vector2 dirMove) {
-        playerInfor.SetMoveDir(dirMove.x == 0 ? playerInfor.MoveDir : dirMove.x > 0 ? -1 : 1);
-        directionMove = dirMove;
-        transform.localScale = new Vector3(playerInfor.MoveDir, 1, 1);
+        if (isFlash) isFlash = false;
 
-        playerInfor.SetIsWalk(true);
-        playerVisual.UpdateVisualWalk(directionMove.x);
+        if (playerInfor.OnGround) {
+            playerInfor.SetDirMove(dirMove.x == 0 ? playerInfor.DirMove : dirMove.x > 0 ? -1 : 1);
+            directionMove = dirMove;
+            transform.localScale = new Vector3(playerInfor.DirMove, 1, 1);
+
+            playerInfor.SetIsWalk(true);
+            playerVisual.UpdateVisualWalk(directionMove.x);
+        }
     }
 
     public void StopWalk() {
         if (playerInfor.IsWalk) {
+            directionMove = Vector2.zero;
+
             playerInfor.SetIsWalk(false);
             playerVisual.UpdateVisualWalk();
         }
@@ -78,16 +92,59 @@ public class PlayerController : MonoBehaviour, ITeleportable
     }
 
     public void Fly(Vector2 dirMove) {
+        if (isFlash) {
+            isFlash = false;
+            RemoveVelocityModifier("PlayerFlash");
+        }
+
         if (playerInfor.Energy >= 1f) {
-            playerInfor.SetMoveDir(dirMove.x == 0 ? playerInfor.MoveDir : dirMove.x > 0 ? -1 : 1);
+            playerInfor.SetDirMove(dirMove.x == 0 ? playerInfor.DirMove : dirMove.x > 0 ? -1 : 1);
             playerInfor.SetEnergy(playerInfor.Energy - 1);
             rb2d.velocity = Vector2.zero;
-            groundVelocity = Vector2.zero;
 
-            transform.localScale = new Vector3(playerInfor.MoveDir, 1, 1);
+            transform.localScale = new Vector3(playerInfor.DirMove, 1, 1);
             rb2d.AddForce(dirMove * playerInfor.FlyForce);
             playerVisual.UpdateVisualFly();
         }
+    }
+
+    public void StartFlash(Vector2 flashDirection) {
+        if (isFlash) return;
+
+        if (playerInfor.Energy >= 1.5f) {
+            playerInfor.SetEnergy(playerInfor.Energy - 1.5f);
+            StartCoroutine(Flash(flashDirection));
+        }
+    }
+
+    IEnumerator Flash(Vector2 flashDirection) {
+        isFlash = true;
+        flashTimer = 0f;
+        rb2d.velocity = Vector2.zero;
+
+        bool isVertical = flashDirection.y > 0;
+        playerVisual.UpdateVisualFlash(true, isVertical);
+
+        if (!isVertical) {
+            playerInfor.SetDirMove(-(int)flashDirection.x);
+            transform.localScale = new Vector3(playerInfor.DirMove, 1, 1);
+        }
+
+        AddVelocityModifier("PlayerFlash", flashSpeed * flashDirection);
+
+        while (isFlash) {
+            yield return new WaitForFixedUpdate();
+
+            flashTimer += Time.deltaTime;
+            if (flashTimer >= flashTime) {
+                rb2d.velocity = isVertical ? Vector2.up : Vector2.zero;
+                isFlash = false;
+                break;
+            }
+        }
+
+        RemoveVelocityModifier("PlayerFlash");
+        playerVisual.UpdateVisualFlash(false, isVertical);
     }
 
     public void Teleport(Vector2 newPos) {
@@ -96,13 +153,14 @@ public class PlayerController : MonoBehaviour, ITeleportable
 
     public void SetPlayerData(PlayerData playerData) {
         transform.position = playerData.pos;
-        playerInfor.SetMoveDir((int)playerData.viewDir);
+        playerInfor.SetDirMove((int)playerData.viewDir);
+        transform.localScale = new Vector3(playerInfor.DirMove, 1, 1);
         rb2d.velocity = playerData.velocity;
         playerInfor.SetEnergy(playerData.energy);
     }
 
     public PlayerData GetPlayerData() {
-        return new PlayerData(transform.position, (PlayerMoveDir)playerInfor.MoveDir, rb2d.velocity, playerInfor.Energy);
+        return new PlayerData(transform.position, (PlayerMoveDir)playerInfor.DirMove, rb2d.velocity, playerInfor.Energy);
     }
 
     private void OnEnable() {
@@ -111,10 +169,6 @@ public class PlayerController : MonoBehaviour, ITeleportable
 
     private void OnDisable() {
         groundCheck.onGroundEvent.RemoveListener(OnGroundHandle);
-    }
-
-    public void SetGroundVelocity(Vector2 velocity) {
-        groundVelocity = velocity;
     }
 
     // will improve later
@@ -132,6 +186,28 @@ public class PlayerController : MonoBehaviour, ITeleportable
 
     public void SetFlyForce(float value) {
         playerInfor.SetFlyForce(value);
+    }
+
+    public void AddVelocityModifier(string source, Vector2 velocity) {
+        velocityModifiers.Add(new KeyValuePair<string, Vector2>(source, velocity));
+        externalVelocity = CalculateExternalVelocity();
+    }
+
+    public void RemoveVelocityModifier(string source) {
+        velocityModifiers.RemoveAll(mod => mod.Key == source);
+        externalVelocity = CalculateExternalVelocity();
+    }
+
+    Vector2 CalculateExternalVelocity() {
+        Vector2 velocity = Vector2.zero;
+        foreach(KeyValuePair<string, Vector2> kvp in velocityModifiers) {
+            velocity += kvp.Value;
+        }
+        return velocity;
+    }
+
+    public bool OnGround() {
+        return playerInfor.OnGround;
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {

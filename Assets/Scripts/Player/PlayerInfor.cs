@@ -41,7 +41,7 @@ public class PlayerInfor
     private float walkSpeed;
     private float flyForce;
     private bool isImmune;
-    private int moveDir;
+    private int dirMove;
     private bool onGround;
     private bool isWalk;
 
@@ -50,7 +50,7 @@ public class PlayerInfor
     public float WalkSpeed => walkSpeed;
     public float FlyForce => flyForce;
     public bool IsImmune => isImmune; 
-    public int MoveDir => moveDir;
+    public int DirMove => dirMove;
     public bool OnGround => onGround;
     public bool IsWalk => isWalk;
 
@@ -70,7 +70,7 @@ public class PlayerInfor
         walkSpeed = baseWalkSpeed;
         flyForce = baseFlyForce;
         isImmune = false;
-        moveDir = 1;
+        dirMove = 1;
 
         onGround = false;
         isWalk = false;
@@ -93,7 +93,7 @@ public class PlayerInfor
         isImmune = value;
     }
 
-    public void SetMoveDir(int value) => moveDir = (value != 0) ? value : 1;
+    public void SetDirMove(int value) => dirMove = (value != 0) ? value : 1;
 
     public void SetOnGround(bool value) => onGround = value;
 

@@ -90,17 +90,28 @@ public class PlayerVisual : MonoBehaviour
             }
         }
 
-        animator.SetFloat("WingSpeed", 1f);
-        animator.SetTrigger("Fly");
-        audioSource.PlayOneShot(wingsFlapAudioClip);
+        VisualFly();
+    }
+
+    public void UpdateVisualFlash(bool isFlash, bool isVertical) {
+        if (isVertical) {
+            animator.SetBool("VerticalFlash", isFlash);
+        }
+        else {
+            animator.SetBool("HorizontalFlash", isFlash);
+        }
     }
 
     IEnumerator ResetSpeedAndTriggerFly(float delay) {
         yield return new WaitForSeconds(delay);
 
+        VisualFly();
+        isProcessingFly = false;
+    }
+
+    void VisualFly() {
         animator.SetFloat("WingSpeed", 1f);
         animator.SetTrigger("Fly");
         audioSource.PlayOneShot(wingsFlapAudioClip);
-        isProcessingFly = false;
     }
 }
