@@ -66,6 +66,10 @@ public class LevelManager : DataManager {
         SaveLoadManager.Save(new LevelGeneralData(currentLevelIndex, maxActiveLevelIndex, maxAvaiableLevelIndex), levelGeneralFileName);
     }
 
+    public void SaveDefaultLevel(int i) {
+        SaveLoadManager.Save(new LevelJsonData(defaultLevelData[i].isSave, defaultLevelData[i].playerData, defaultLevelData[i].tileData, defaultLevelData[i].animalData), $"Default{levelData[i].name}");
+    }
+
     public void SaveLevel(int i) {
         SaveLoadManager.Save(new LevelJsonData(levelData[i].isSave, levelData[i].playerData, levelData[i].tileData, levelData[i].animalData), $"{levelData[i].name}");
     }
@@ -78,6 +82,7 @@ public class LevelManager : DataManager {
     }
 
     public override void Load() {
+        // load general data
         Data data1 = SaveLoadManager.Load(levelGeneralFileName);
         if (data1 != null) {
             if (data1 is LevelGeneralData levelGeneralData) {
@@ -87,6 +92,20 @@ public class LevelManager : DataManager {
             }
         }
 
+        // load default level data
+        for (int i = 0; i < defaultLevelData.Count; i++) {
+            Data data = SaveLoadManager.Load($"Default{levelData[i].name}");
+            if (data != null) {
+                if (data is LevelJsonData levelJsonData) {
+                    defaultLevelData[i].isSave = levelJsonData.isSave;
+                    defaultLevelData[i].playerData = levelJsonData.playerData;
+                    defaultLevelData[i].tileData = levelJsonData.tileData;
+                    defaultLevelData[i].animalData = levelJsonData.animalData;
+                }
+            }
+        }
+
+        // load level data
         for (int i = 0; i < levelData.Count; i++) {
             Data data = SaveLoadManager.Load($"{levelData[i].name}");
             if (data != null) {

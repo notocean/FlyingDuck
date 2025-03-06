@@ -22,15 +22,23 @@ public class PlayerController : MonoBehaviour, ITeleportable
     bool isFlash = false;
 
     Rigidbody2D rb2d;
+    PlayerInputHandler playerInputHandler;
 
     private void Awake() {
         rb2d = GetComponent<Rigidbody2D>();
+        playerInputHandler = GetComponent<PlayerInputHandler>();
 
         playerInfor = new PlayerInfor(4f, 0.5f, 1f, 250f);
         playerVisual = GetComponent<PlayerVisual>();
         playerVisual.SetPlayerInfor(playerInfor);
 
         mapSideTeleportEvent.RaiseRegisterEvent(transform);
+    }
+
+    private void Start() {
+        playerInputHandler.onWalk += Walk;
+        playerInputHandler.onFly += Fly;
+        playerInputHandler.onFlash += StartFlash;
     }
 
     private void Update() {
@@ -55,7 +63,17 @@ public class PlayerController : MonoBehaviour, ITeleportable
         }
     }
 
-    public void Walk(Vector2 dirMove) {
+    void Walk(bool isWalk, Vector2 dirMove) {
+        if (!isWalk) {
+            if (playerInfor.IsWalk) {
+                directionMove = Vector2.zero;
+
+                playerInfor.SetIsWalk(false);
+                playerVisual.UpdateVisualWalk();
+            }
+            return;
+        }
+        
         if (isFlash) isFlash = false;
 
         if (playerInfor.OnGround) {
@@ -68,15 +86,6 @@ public class PlayerController : MonoBehaviour, ITeleportable
         }
     }
 
-    public void StopWalk() {
-        if (playerInfor.IsWalk) {
-            directionMove = Vector2.zero;
-
-            playerInfor.SetIsWalk(false);
-            playerVisual.UpdateVisualWalk();
-        }
-    }
-
     void OnGroundHandle(bool onGround) {
         playerInfor.SetOnGround(onGround);
         if (playerInfor.OnGround) {
@@ -84,14 +93,14 @@ public class PlayerController : MonoBehaviour, ITeleportable
         }
         else {
             if (playerInfor.IsWalk)
-                StopWalk();
+                Walk(false, Vector2.zero);
             playerInfor.SetEnergySpeed(playerInfor.DefaultEnergySpeed);
         }
 
         playerVisual.UpdateVisualOnGround();
     }
 
-    public void Fly(Vector2 dirMove) {
+    void Fly(Vector2 dirMove) {
         if (isFlash) {
             isFlash = false;
             RemoveVelocityModifier("PlayerFlash");
@@ -139,11 +148,11 @@ public class PlayerController : MonoBehaviour, ITeleportable
             if (flashTimer >= flashTime) {
                 rb2d.velocity = isVertical ? Vector2.up : Vector2.zero;
                 isFlash = false;
+                RemoveVelocityModifier("PlayerFlash");
                 break;
             }
         }
 
-        RemoveVelocityModifier("PlayerFlash");
         playerVisual.UpdateVisualFlash(false, isVertical);
     }
 
@@ -161,14 +170,6 @@ public class PlayerController : MonoBehaviour, ITeleportable
 
     public PlayerData GetPlayerData() {
         return new PlayerData(transform.position, (PlayerMoveDir)playerInfor.DirMove, rb2d.velocity, playerInfor.Energy);
-    }
-
-    private void OnEnable() {
-        groundCheck.onGroundEvent.AddListener(OnGroundHandle);
-    }
-
-    private void OnDisable() {
-        groundCheck.onGroundEvent.RemoveListener(OnGroundHandle);
     }
 
     // will improve later
@@ -218,5 +219,13 @@ public class PlayerController : MonoBehaviour, ITeleportable
                 PlayerDataManager.Instance.Food += food;
             }
         }
+    }
+
+    private void OnEnable() {
+        groundCheck.onGroundEvent.AddListener(OnGroundHandle);
+    }
+
+    private void OnDisable() {
+        groundCheck.onGroundEvent.RemoveListener(OnGroundHandle);
     }
 }

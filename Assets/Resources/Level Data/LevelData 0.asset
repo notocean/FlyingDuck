@@ -12,198 +12,198 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 507d5f522ace1c64b8d0f534b7bf3182, type: 3}
   m_Name: LevelData 0
   m_EditorClassIdentifier: 
-  isSave: 0
-  duckData:
-    pos: {x: -0.068, y: 0.577}
-    viewDir: 1
+  isSave: 1
+  playerData:
+    pos: {x: -3.01518, y: 16.660076}
+    viewDir: -1
     velocity: {x: 0, y: 0}
-    energy: 0
+    energy: 4
   tileData:
     keys:
     - Tile 29
+    - Tile 54
+    - Tile 51
+    - Tile 58
+    - Tile 70
+    - Tile 59
+    - Tile 55
+    - Tile 69
+    - Tile 63
+    - Tile 48
+    - Tile 65
+    - Tile 60
+    - Tile 66
+    - Tile 67
+    - Tile 44
     - Tile 30
     - Tile 31
     - Tile 39
-    - Tile 44
-    - Tile 48
-    - Tile 51
-    - Tile 52
-    - Tile 54
-    - Tile 55
-    - Tile 58
-    - Tile 59
-    - Tile 60
     - Tile 62
-    - Tile 63
+    - Tile 52
     - Tile 64
-    - Tile 65
-    - Tile 66
-    - Tile 67
-    - Tile 69
-    - Tile 70
     values:
     - data:
-        rid: 6126503427864003456
+        rid: 8048700131244245318
     - data:
-        rid: 6126503427864003457
+        rid: 8048700131244245319
     - data:
-        rid: 6126503427864003458
+        rid: 8048700131244245320
     - data:
-        rid: 6126503427864003459
+        rid: 8048700131244245321
     - data:
-        rid: 6126503427864003460
+        rid: 8048700131244245322
     - data:
-        rid: 6126503427864003461
+        rid: 8048700131244245323
     - data:
-        rid: 6126503427864003462
+        rid: 8048700131244245324
     - data:
-        rid: 6126503427864003463
+        rid: 8048700131244245325
     - data:
-        rid: 6126503427864003464
+        rid: 8048700131244245326
     - data:
-        rid: 6126503427864003465
+        rid: 8048700131244245327
     - data:
-        rid: 6126503427864003466
+        rid: 8048700131244245328
     - data:
-        rid: 6126503427864003467
+        rid: 8048700131244245329
     - data:
-        rid: 6126503427864003468
+        rid: 8048700131244245330
     - data:
-        rid: 6126503427864003469
+        rid: 8048700131244245331
     - data:
-        rid: 6126503427864003470
+        rid: 8048700131244245332
     - data:
-        rid: 6126503427864003471
+        rid: 8048700131244245333
     - data:
-        rid: 6126503427864003472
+        rid: 8048700131244245334
     - data:
-        rid: 6126503427864003473
+        rid: 8048700131244245335
     - data:
-        rid: 6126503427864003474
+        rid: 8048700131244245336
     - data:
-        rid: 6126503427864003475
+        rid: 8048700131244245337
     - data:
-        rid: 6126503427864003476
+        rid: 8048700131244245338
   animalData:
     keys:
-    - Animal 1
-    - Animal 2
     - Animal 3
-    - Animal 4
-    - Animal 5
-    - Animal 6
-    - Animal 7
     - Animal 8
+    - Animal 7
+    - Animal 2
+    - Animal 6
     - Animal 9
+    - Animal 1
+    - Animal 5
+    - Animal 4
     values:
     - data:
-        rid: 6126503427864003477
+        rid: 8048700131244245339
     - data:
-        rid: 6126503427864003478
+        rid: 8048700131244245340
     - data:
-        rid: 6126503427864003479
+        rid: 8048700131244245341
     - data:
-        rid: 6126503427864003480
+        rid: 8048700131244245342
     - data:
-        rid: 6126503427864003481
+        rid: 8048700131244245343
     - data:
-        rid: 6126503427864003482
+        rid: 8048700131244245344
     - data:
-        rid: 6126503427864003483
+        rid: 8048700131244245345
     - data:
-        rid: 6126503427864003484
+        rid: 8048700131244245346
     - data:
-        rid: 6126503427864003485
+        rid: 8048700131244245347
   references:
     version: 2
     RefIds:
-    - rid: 6126503427864003456
+    - rid: 8048700131244245318
       type: {class: BrokenTileData, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 6126503427864003457
+    - rid: 8048700131244245319
       type: {class: BrokenTileData, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 6126503427864003458
+    - rid: 8048700131244245320
+      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245321
       type: {class: BrokenTileData, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 6126503427864003459
+    - rid: 8048700131244245322
+      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245323
+      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245324
       type: {class: BrokenTileData, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 6126503427864003460
+    - rid: 8048700131244245325
+      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245326
+      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245327
+      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245328
+      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245329
+      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245330
       type: {class: BrokenTileData, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 6126503427864003461
+    - rid: 8048700131244245331
       type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 6126503427864003462
-      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 6126503427864003463
-      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 6126503427864003464
+    - rid: 8048700131244245332
       type: {class: BrokenTileData, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 6126503427864003465
+    - rid: 8048700131244245333
       type: {class: BrokenTileData, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 6126503427864003466
+    - rid: 8048700131244245334
       type: {class: BrokenTileData, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 6126503427864003467
-      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 6126503427864003468
-      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 6126503427864003469
+    - rid: 8048700131244245335
       type: {class: BrokenTileData, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 6126503427864003470
-      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 6126503427864003471
-      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 6126503427864003472
-      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 6126503427864003473
+    - rid: 8048700131244245336
       type: {class: BrokenTileData, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 6126503427864003474
+    - rid: 8048700131244245337
       type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 6126503427864003475
+    - rid: 8048700131244245338
       type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 6126503427864003476
-      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 6126503427864003477
+    - rid: 8048700131244245339
       type: {class: WormData, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 6126503427864003478
+    - rid: 8048700131244245340
       type: {class: WormData, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 6126503427864003479
+    - rid: 8048700131244245341
       type: {class: WormData, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 6126503427864003480
+    - rid: 8048700131244245342
       type: {class: WormData, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 6126503427864003481
+    - rid: 8048700131244245343
       type: {class: WormData, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 6126503427864003482
+    - rid: 8048700131244245344
       type: {class: WormData, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 6126503427864003483
+    - rid: 8048700131244245345
       type: {class: WormData, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 6126503427864003484
+    - rid: 8048700131244245346
       type: {class: WormData, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 6126503427864003485
+    - rid: 8048700131244245347
       type: {class: WormData, ns: , asm: Assembly-CSharp}
       data: 

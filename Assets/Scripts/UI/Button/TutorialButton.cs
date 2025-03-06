@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class TutorialButton : MonoBehaviour
 {
     private Button button;
-    [SerializeField] Tutorial tutorial;
+    [SerializeField] Canvas talkCanvas;
+    [SerializeField] Dialog tutorialDialog;
 
     private void Awake() {
         button = GetComponent<Button>();
@@ -17,6 +18,18 @@ public class TutorialButton : MonoBehaviour
     }
 
     private void OpenTutorial() {
-        tutorial.Open();
+        tutorialDialog.Open();
+    }
+
+    void SetVisual(bool doTutorial) {
+        talkCanvas.enabled = !doTutorial;
+    }
+
+    private void OnEnable() {
+        GameManager.Instance.DoTutorialChanged += SetVisual;
+    }
+
+    private void OnDisable() {
+        GameManager.Instance.DoTutorialChanged -= SetVisual;
     }
 }

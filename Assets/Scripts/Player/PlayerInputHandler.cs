@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +13,6 @@ public enum DragType { None, Top, Left, Right, Down }
 public class PlayerInputHandler : MonoBehaviour
 {
     [SerializeField] PlayerInputEvent playerInputEvent;
-    PlayerController playerController;
 
     InputAreaType areaType = InputAreaType.None;
     InputStateType stateType = InputStateType.Release;
@@ -33,17 +33,18 @@ public class PlayerInputHandler : MonoBehaviour
     [SerializeField] float maxDragTime = 0.5f;
     DragType dragType = DragType.None;
 
-    private void Awake() {
-        playerController = GetComponent<PlayerController>();
-    }
+    public Action<bool, Vector2> onWalk;
+    public Action<Vector2> onFly;
+    public Action<Vector2> onFlash;
 
     private void Update() {
         if (isWalk) {
             if (areaType >= InputAreaType.Middle) {
-                playerController.Walk(currentInput);
+                onWalk?.Invoke(true, currentInput);
             }
             else {
-                playerController.StopWalk();
+                // stop if drag joystick on top or topmiddle area
+                onWalk?.Invoke(false, Vector2.zero);
             }
         }
     }
@@ -55,13 +56,18 @@ public class PlayerInputHandler : MonoBehaviour
 
         switch (joystickState) {
             case JoystickState.Press:
-                isWalk = true;
+                if (areaType >= InputAreaType.Middle) {
+                    isWalk = true;
+                }
                 initialInput = input;
                 if (input.magnitude < dragBeginThreshold)
                     StartCoroutine(DetectDrag());
                 StartCoroutine(DetectHold());
                 break;
             case JoystickState.Drag:
+                if (areaType >= InputAreaType.Middle) {
+                    isWalk = true;
+                }
                 break;
             case JoystickState.Release:
                 if (dragType != DragType.None) {
@@ -76,16 +82,17 @@ public class PlayerInputHandler : MonoBehaviour
                     }
 
                     if (areaType == InputAreaType.Top) {
-                        playerController.Fly(Vector2.up);
+                        onFly?.Invoke(Vector2.up);
                     }
                     else if (areaType == InputAreaType.TopMiddle) {
-                        playerController.Fly(ConvertToClampedAngle());
+                        onFly?.Invoke(ConvertToClampedAngle());
                     }
                 }
 
-                playerController.StopWalk();
-
-                isWalk = false;
+                if (isWalk) {
+                    onWalk?.Invoke(false, Vector2.zero);
+                    isWalk = false;
+                }
                 stateType = InputStateType.Release;
                 StopAllCoroutines();
 
@@ -176,13 +183,13 @@ public class PlayerInputHandler : MonoBehaviour
     void HandleDrag() {
         switch (dragType) {
             case DragType.Top:
-                playerController.StartFlash(1.25f * Vector2.up);
+                onFlash?.Invoke(1.25f * Vector2.up);
                 break;
             case DragType.Right:
-                playerController.StartFlash(Vector2.right);
+                onFlash?.Invoke(Vector2.right);
                 break;
             case DragType.Left:
-                playerController.StartFlash(Vector2.left);
+                onFlash?.Invoke(Vector2.left);
                 break;
             case DragType.Down:
 

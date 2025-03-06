@@ -13,17 +13,197 @@ MonoBehaviour:
   m_Name: LevelData 1
   m_EditorClassIdentifier: 
   isSave: 0
-  duckData:
+  playerData:
     pos: {x: 0, y: 0}
-    viewDir: 1
+    viewDir: 0
     velocity: {x: 0, y: 0}
     energy: 0
   tileData:
-    keys: []
-    values: []
+    keys:
+    - Tile 55
+    - Tile 67
+    - Tile 70
+    - Tile 52
+    - Tile 60
+    - Tile 54
+    - Tile 30
+    - Tile 69
+    - Tile 62
+    - Tile 48
+    - Tile 58
+    - Tile 31
+    - Tile 65
+    - Tile 51
+    - Tile 44
+    - Tile 66
+    - Tile 59
+    - Tile 29
+    - Tile 63
+    - Tile 39
+    - Tile 64
+    values:
+    - data:
+        rid: 8048700131244245288
+    - data:
+        rid: 8048700131244245289
+    - data:
+        rid: 8048700131244245290
+    - data:
+        rid: 8048700131244245291
+    - data:
+        rid: 8048700131244245292
+    - data:
+        rid: 8048700131244245293
+    - data:
+        rid: 8048700131244245294
+    - data:
+        rid: 8048700131244245295
+    - data:
+        rid: 8048700131244245296
+    - data:
+        rid: 8048700131244245297
+    - data:
+        rid: 8048700131244245298
+    - data:
+        rid: 8048700131244245299
+    - data:
+        rid: 8048700131244245300
+    - data:
+        rid: 8048700131244245301
+    - data:
+        rid: 8048700131244245302
+    - data:
+        rid: 8048700131244245303
+    - data:
+        rid: 8048700131244245304
+    - data:
+        rid: 8048700131244245305
+    - data:
+        rid: 8048700131244245306
+    - data:
+        rid: 8048700131244245307
+    - data:
+        rid: 8048700131244245308
   animalData:
-    keys: []
-    values: []
+    keys:
+    - Animal 9
+    - Animal 2
+    - Animal 4
+    - Animal 7
+    - Animal 1
+    - Animal 5
+    - Animal 3
+    - Animal 6
+    - Animal 8
+    values:
+    - data:
+        rid: 8048700131244245309
+    - data:
+        rid: 8048700131244245310
+    - data:
+        rid: 8048700131244245311
+    - data:
+        rid: 8048700131244245312
+    - data:
+        rid: 8048700131244245313
+    - data:
+        rid: 8048700131244245314
+    - data:
+        rid: 8048700131244245315
+    - data:
+        rid: 8048700131244245316
+    - data:
+        rid: 8048700131244245317
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 8048700131244245288
+      type: {class: BrokenTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245289
+      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245290
+      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245291
+      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245292
+      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245293
+      type: {class: BrokenTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245294
+      type: {class: BrokenTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245295
+      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245296
+      type: {class: BrokenTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245297
+      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245298
+      type: {class: BrokenTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245299
+      type: {class: BrokenTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245300
+      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245301
+      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245302
+      type: {class: BrokenTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245303
+      type: {class: BrokenTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245304
+      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245305
+      type: {class: BrokenTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245306
+      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245307
+      type: {class: BrokenTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245308
+      type: {class: RepeatMovingTileData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245309
+      type: {class: WormData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245310
+      type: {class: WormData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245311
+      type: {class: WormData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245312
+      type: {class: WormData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245313
+      type: {class: WormData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245314
+      type: {class: WormData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245315
+      type: {class: WormData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245316
+      type: {class: WormData, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8048700131244245317
+      type: {class: WormData, ns: , asm: Assembly-CSharp}
+      data: 

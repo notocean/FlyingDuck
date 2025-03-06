@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -46,8 +47,20 @@ public class GameManager : MonoBehaviour
         set { _player = value; }
     }
 
+    [SerializeField] GameObject confirmDialogPrefab;
+
     private LevelManager levelManager;
     private LevelDataManager levelDataManager;
+
+    bool _doTutorial;
+    public bool DoTutorial {
+        get {  return _doTutorial; }
+        set {
+            _doTutorial = value;
+            DoTutorialChanged?.Invoke(value);
+        }
+    }
+    public Action<bool> DoTutorialChanged;
 
     [SerializeField] List<DataManager> dataManagers = new List<DataManager>();
 
@@ -74,17 +87,23 @@ public class GameManager : MonoBehaviour
                 foreach (KeyValuePair<string, Animal> animal in levelDataManager.GetAnimalObjects()) {
                     animal.Value.SetAnimalData(levelData.animalData[animal.Key].data);
                 }
-            }
 
-            Player.GetComponent<PlayerController>().SetPlayerData(levelData.playerData);
+                Player.GetComponent<PlayerController>().SetPlayerData(levelData.playerData);
+            }
+            else {
+                SaveLevel(true);
+            }
         }
     }
 
-    public void SaveLevel() {
+    public void SaveLevel(bool includeDefaultLevel = false) {
         if (SceneManager.GetActiveScene().buildIndex == 0)
             return;
+
         LevelData levelData = levelManager.GetCurrentLevelData();
-        levelData.isSave = true;
+
+        if (!levelData.isSave)
+            levelData.isSave = true;
         levelData.playerData = Player.GetComponent<PlayerController>().GetPlayerData();
 
         if (levelDataManager != null) {
@@ -99,6 +118,17 @@ public class GameManager : MonoBehaviour
             }
         }
         levelManager.SaveLevel(levelManager.currentLevelIndex);
+
+        if (includeDefaultLevel) {
+            LevelData defaultLevelData = levelManager.GetDefaultLevelData();
+
+            defaultLevelData.isSave = true;
+            defaultLevelData.playerData = levelData.playerData;
+            defaultLevelData.tileData = levelData.tileData;
+            defaultLevelData.animalData = levelData.animalData;
+
+            levelManager.SaveDefaultLevel(levelManager.currentLevelIndex);
+        }
     }
 
     public void ResetLevel() {
@@ -123,6 +153,10 @@ public class GameManager : MonoBehaviour
             dataManager.Save();
         }
         SaveLevel();
+    }
+
+    public void ShowConfirmDialog() {
+
     }
 
     private void OnApplicationQuit() {
