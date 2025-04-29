@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,11 +20,11 @@ public class NextLevel : MonoBehaviour
     private void Next() {
         levelManager.ResetLevel();
         currentDialog.Close();
-        levelManager.ChangeCurrentLevel(1);
-        int currentIndexLevel = levelManager.currentLevelIndex;
-        int maxIndexLevel = levelManager.maxActiveLevelIndex;
-        if (currentIndexLevel <= maxIndexLevel)
-            GameManager.Instance.ChangeScene(currentIndexLevel + 1);
+        if (levelManager.currentLevelIndex < levelManager.maxActiveLevelIndex) {
+            levelManager.ChangeCurrentLevel(1);
+            Debug.Log(levelManager.currentLevelIndex);
+            GameManager.Instance.ChangeScene(levelManager.currentLevelIndex + 1);
+        }
         else GameManager.Instance.ChangeScene(0);
     }
 }

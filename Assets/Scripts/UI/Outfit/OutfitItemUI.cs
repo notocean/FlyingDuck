@@ -1,21 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Image))]
 [RequireComponent(typeof(Button))]
 public class OutfitItemUI : MonoBehaviour
 {
-    private HairOutfit hairOutfit;
+    public HairOutfit hairOutfit { get; private set; }
 
     private Image backgroundImage;
     [SerializeField] private Sprite normalSprite;
     [SerializeField] private Sprite selectedSprite;
 
     [SerializeField] private Image outfitImage;
+    [SerializeField] GameObject attentionPrefab;
+
     private Button outfitButton;
+    GameObject attentionObj;
 
     private void Awake() {
         backgroundImage = GetComponent<Image>();
@@ -52,7 +52,26 @@ public class OutfitItemUI : MonoBehaviour
         }
     }
 
+    public void SetAttention(bool attention) {
+        if (attention) {
+            if (attentionObj == null) {
+                attentionObj = Instantiate(attentionPrefab, transform);
+            }
+        }
+        else {
+            if (attentionObj != null) {
+                Destroy(attentionObj);
+            }
+        }
+    }
+
     public void ClickedHandle() {
-        HairOutfitList.Instance.SetOutfit(hairOutfit.index);
+        HairOutfitManager.Instance.SetOutfit(hairOutfit.index);
+
+        if (hairOutfit.hasAttention) {
+            hairOutfit.hasAttention = false;
+            SetAttention(false);
+            HairOutfitManager.Instance.UpdateAttention();
+        }
     }
 }

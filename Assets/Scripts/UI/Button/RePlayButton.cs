@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
@@ -8,9 +6,9 @@ public class ReplayButton : MonoBehaviour
 {
     private Button button;
     [SerializeField] Dialog currentDialog;
-    [SerializeField] ConfirmDialog confirmDialog;
+    [SerializeField] GameObject dialogPrefab;
 
-    const string warningLabel = "Chơi lại?";
+    const string warningLabel = "CHƠI LẠI?";
     const string warningContent = "Dữ liệu hiện tại của bạn sẽ bị mất. Bạn có chắc chắn muốn chơi lại không?";
 
     private void Awake() {
@@ -18,14 +16,15 @@ public class ReplayButton : MonoBehaviour
     }
 
     private void Start() {
-        button.onClick.AddListener(OnRePlay);
+        button.onClick.AddListener(OnReplay);
+
+        DialogManager.Instance.RegisterDialog(dialogPrefab.name, dialogPrefab);
     }
 
-    private async void OnRePlay() {
+    private async void OnReplay() {
         currentDialog.Close();
 
-        confirmDialog.Init(new NotificationDialogParamater(warningLabel, warningContent));
-        confirmDialog.Open();
+        ConfirmDialog confirmDialog = DialogManager.Instance.ShowDialog(dialogPrefab.name, new NotificationDialogParamater(warningLabel, warningContent)) as ConfirmDialog;
         bool isConfirmed = await confirmDialog.WaitAsync();
 
         if (isConfirmed) {

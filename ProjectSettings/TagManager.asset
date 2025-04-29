@@ -8,6 +8,7 @@ TagManager:
   - PlayerFoot
   - Tile
   - Animal
+  - Plant
   layers:
   - Default
   - TransparentFX
@@ -19,8 +20,8 @@ TagManager:
   - Player
   - Animal
   - 
-  - 
-  - 
+  - Item
+  - Bullet
   - 
   - 
   - 
@@ -53,6 +54,9 @@ TagManager:
     locked: 0
   - name: Animal
     uniqueID: 3063228427
+    locked: 0
+  - name: Plant
+    uniqueID: 3807429631
     locked: 0
   - name: UI
     uniqueID: 1594086511

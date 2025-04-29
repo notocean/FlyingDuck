@@ -1,48 +1,71 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class PharmaceuticalItemManager : MonoBehaviour {
     List<Pharmaceutical> pharmaceuticals;
     [SerializeField] private GameObject pharmaceuticalUIObj;
     private List<PharmaceuticalItemUI> pharmaceuticalItems = new List<PharmaceuticalItemUI>();
     private PharmaceuticalItemUI currentSelectedItem;
+    bool wasGenerated = false;
 
     private void Awake() {
-        pharmaceuticals = PharmaceuticalList.Instance.pharmaceuticals;
+        pharmaceuticals = PharmaceuticalManager.Instance.pharmaceuticalList;
     }
 
-    private void Start() {
-        int index = PharmaceuticalList.Instance.currentPharmaceuticalIndex;
+    IEnumerator Display() {
+        yield return null;
+
+        if (!wasGenerated) {
+            Generate();
+        }
+
+        Refresh();
+    }
+
+    private void Generate() {
+        wasGenerated = true;
+
+        // Tạo các hình ảnh dược phẩm
+        int index = PharmaceuticalManager.Instance.currentPharmaceuticalIndex;
         for (int i = 0; i < pharmaceuticals.Count; i++) {
             pharmaceuticalItems.Add(Instantiate(pharmaceuticalUIObj, transform, false).GetComponentInChildren<PharmaceuticalItemUI>());
-            pharmaceuticalItems[i].Initial(pharmaceuticals[i], this, i);
+            pharmaceuticalItems[i].Initial(pharmaceuticals[i]);
             if (i == index) {
-                currentSelectedItem = pharmaceuticalItems[i];
-                currentSelectedItem.SetVisual(true);
+                SetSelectedItem(i);
             }
         }
     }
 
+    private void Refresh() {
+        // Cập nhật các dược phẩm
+        int currentSelectedIndex = PharmaceuticalManager.Instance.currentPharmaceuticalIndex;
+
+        foreach (PharmaceuticalItemUI pharmaceuticalItemUI in pharmaceuticalItems) {
+            Pharmaceutical pharmaceutical = pharmaceuticalItemUI.pharmaceutical;
+            PharmaceuticalManager.Instance.RefreshPharmaceutical(pharmaceutical.index);
+            pharmaceuticalItemUI.SetActive(pharmaceutical.isActive);
+            pharmaceuticalItemUI.SetAttention(pharmaceutical.hasAttention);
+        }
+
+        PharmaceuticalManager.Instance.RefreshPharmaceutical(currentSelectedIndex);
+    }
+
     private void SetSelectedItem(int index) {
-        currentSelectedItem.SetVisual(false);
+        if (currentSelectedItem != null)
+            currentSelectedItem.SetVisual(false);
         currentSelectedItem = pharmaceuticalItems[index];
         currentSelectedItem.SetVisual(true);
     }
 
-    private void ActivePharmaceutical(int index) {
-        pharmaceuticalItems[index].SetActive(true);
-    }
-
     private void OnEnable() {
-        PharmaceuticalList.Instance.pharmaceuticalChanged.AddListener(SetSelectedItem);
-        PharmaceuticalList.Instance.isActiveEvent.AddListener(ActivePharmaceutical);
+        PharmaceuticalManager.Instance.pharmaceuticalChanged += SetSelectedItem;
+
+        StartCoroutine(Display());
     }
 
     private void OnDisable() {
-        PharmaceuticalList.Instance.pharmaceuticalChanged.AddListener(SetSelectedItem);
-        PharmaceuticalList.Instance.isActiveEvent.AddListener(ActivePharmaceutical);
+        PharmaceuticalManager.Instance.pharmaceuticalChanged -= SetSelectedItem;
+
     }
 }

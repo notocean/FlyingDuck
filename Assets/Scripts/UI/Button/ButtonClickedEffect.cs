@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -31,7 +30,7 @@ public class ButtonClickedEffect : MonoBehaviour, IPointerDownHandler, IPointerU
         float startScale = rectTrans.localScale.x;
         float targetScale = effectScale;
 
-        // stage 1
+        // Bước 1: Thu nhỏ
         while (timer < 1) {
             timer += Time.unscaledDeltaTime * effectSpeed;
             float scale = Mathf.Lerp(startScale, targetScale, timer);
@@ -41,10 +40,10 @@ public class ButtonClickedEffect : MonoBehaviour, IPointerDownHandler, IPointerU
 
         rectTrans.localScale = new Vector3(effectScale, effectScale, effectScale);
 
-        // wait for pointer up
+        // Đợi người dùng nhả nút
         yield return new WaitUntil(() => !isPointerDown);
 
-        // stage 2
+        // Bước 2: Phóng to
         timer = 0;
         startScale = effectScale;
         targetScale = 1;

@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class OcclusionCulling2DObject : MonoBehaviour
 {
@@ -24,6 +22,10 @@ public class OcclusionCulling2DObject : MonoBehaviour
 
             foreach (Collider2D collider2D in GetComponentsInChildren<Collider2D>()) {
                 collider2D.enabled = isVisible;
+            }
+
+            foreach (IHidableObject hidableObject in GetComponentsInChildren<IHidableObject>()) {
+                hidableObject.SetVisible(isVisible);
             }
         }
     }

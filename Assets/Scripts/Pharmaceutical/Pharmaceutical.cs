@@ -1,19 +1,25 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Pharmaceutical : ScriptableObject
+[CreateAssetMenu(fileName = "Pharmaceutical", menuName = "Pharmaceutical/Pharmaceutical")]
+public class Pharmaceutical : Effect
 {
     public int index;
     public Sprite sprite;
     public int price;
-    public string infor;
     public float effectTime;
 
     public bool isActive;
     public int count;
-    public float timeRemaining;
+    public bool hasAttention;
+    public List<float> timeRemainingList;
 
-    public abstract void ApplyEffect(GameObject target);
-    public abstract void EndEffect(GameObject target);
+    private void OnValidate() {
+        if (!isActive) {
+            count = 0;
+            for (int i = 0; i < timeRemainingList.Count; i++) {
+                timeRemainingList[i] = 0;
+            }
+        }
+    }
 }

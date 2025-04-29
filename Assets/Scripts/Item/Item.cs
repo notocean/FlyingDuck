@@ -1,39 +1,48 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Item : MonoBehaviour
+public class Item : MonoBehaviour, ICollected
 {
     private SpriteRenderer spriteRenderer;
-    private Animator animator;
     [SerializeField] private int itemIndex;
+    [SerializeField] GameObject itemCollectedEffectPrefab;
+    AudioPlayer audioPlayer;
+    bool isCollected = false;
+
+    const string label = "Trang phục mới";
 
     private void Awake() {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        animator = GetComponent<Animator>();
+        audioPlayer = GetComponentInChildren<AudioPlayer>();
     }
 
     private void Start() {
+        DialogManager.Instance.RegisterDialog(itemCollectedEffectPrefab.name, itemCollectedEffectPrefab);
         Initial();
     }
 
     public void Initial() {
-        if (HairOutfitList.Instance.hairOutfits[itemIndex].isActive) {
+        if (HairOutfitManager.Instance.hairOutfits[itemIndex].isActive) {
+            isCollected = true;
             Destroy(gameObject);
         }
-        spriteRenderer.sprite = HairOutfitList.Instance.hairOutfits[itemIndex].sprite;
+        spriteRenderer.sprite = HairOutfitManager.Instance.hairOutfits[itemIndex].spriteUI;
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        if ((LayerMask.GetMask("Player") & (1 << collision.gameObject.layer)) != 0) {
-            Collected();
-        }
+        
     }
 
-    private void Collected() {
-        GetComponent<Collider2D>().enabled = false;
-        animator.SetTrigger("Collected");
+    public void Collect() {
+        if (!isCollected) {
+            isCollected = true;
 
-        HairOutfitList.Instance.SetActive(itemIndex);
+            GetComponent<Collider2D>().enabled = false;
+            audioPlayer.Play();
+            DialogManager.Instance.ShowDialog(itemCollectedEffectPrefab.name, new ItemCollectedEffectDialogParamater(label, spriteRenderer.sprite));
+
+            HairOutfitManager.Instance.SetActive(itemIndex);
+            HairOutfitManager.Instance.UpdateAttention();
+            Destroy(gameObject);
+        }
     }
 }

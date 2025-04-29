@@ -1,8 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-
 public class BuyButton : HidableButton {
     protected override void Start() {
         base.Start();
@@ -10,21 +5,25 @@ public class BuyButton : HidableButton {
     }
 
     protected override void ClickedHandle() {
-        PharmaceuticalList.Instance.Buy();
+        PharmaceuticalManager.Instance.Buy();
     }
 
     private void SelectPharmaceuticalHandle(int index = 0) {
-        if (PlayerDataManager.Instance.Food >= PharmaceuticalList.Instance.GetCurrentPharmaceutical().price) {
-            SetVisual(true);
+        Pharmaceutical pharmaceutical = PharmaceuticalManager.Instance.GetCurrentPharmaceutical();
+        if (pharmaceutical != null) {
+            if (PlayerDataManager.Instance.Food >= pharmaceutical.price) {
+                SetVisual(true);
+            }
+            else SetVisual(false);
         }
         else SetVisual(false);
     }
 
     private void OnEnable() {
-        PharmaceuticalList.Instance.pharmaceuticalChanged.AddListener(SelectPharmaceuticalHandle);
+        PharmaceuticalManager.Instance.pharmaceuticalChanged += SelectPharmaceuticalHandle;
     }
 
     private void OnDisable() {
-        PharmaceuticalList.Instance.pharmaceuticalChanged.AddListener(SelectPharmaceuticalHandle);
+        PharmaceuticalManager.Instance.pharmaceuticalChanged -= SelectPharmaceuticalHandle;
     }
 }

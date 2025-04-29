@@ -153,7 +153,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1.25
+  m_PixelsPerUnitMultiplier: 1.5
 --- !u!114 &2864995822200849562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,6 +225,7 @@ MonoBehaviour:
   normalSprite: {fileID: 687162003, guid: a8f5ec4a2c4d011499941fa5498e2e05, type: 3}
   selectedSprite: {fileID: -1546609090, guid: a8f5ec4a2c4d011499941fa5498e2e05, type: 3}
   outfitImage: {fileID: 6773211639727460361}
+  attentionPrefab: {fileID: 1648031348685499733, guid: 2880261407ad6a941ab338fe3dbcdb49, type: 3}
 --- !u!114 &2444047475082858976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,4 +238,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67c54082be529e44aad99d569eb8bbeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioClip: {fileID: 8300000, guid: 346b51cb691599046a17c0cede637fd9, type: 3}
+  audioClip: {fileID: 8300000, guid: 775859d73d8b06a4488af0580b485ab3, type: 3}

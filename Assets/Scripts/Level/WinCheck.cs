@@ -1,36 +1,28 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
 public class WinCheck : MonoBehaviour
 {
-    [SerializeField] private Dialog dialog;
-    [SerializeField] private AudioPlayer audioPlayer;
+    [SerializeField] GameObject dialogPrefab;
+    [SerializeField] private AudioClip winningAudioClip;
     private bool isWin = false;
 
-    private void Awake() {
-        dialog.showEvent.AddListener(MusicHandle);
+    private void Start() {
+        DialogManager.Instance.RegisterDialog(dialogPrefab.name, dialogPrefab);
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (!isWin) {
-            if ((LayerMask.GetMask("Player") & (1 << collision.gameObject.layer)) != 0) {
-                isWin = true;
-                StartCoroutine(OpenWinningDialog());
-            }
+            isWin = true;
+            StartCoroutine(OpenWinningDialog());
         }
     }
 
     IEnumerator OpenWinningDialog() {
         yield return new WaitForSeconds(0.5f);
-        dialog.Open();
-        audioPlayer.Play();
-    }
-
-    private void MusicHandle(bool showDialog) {
-        if (showDialog) 
-            AudioManager.Instance.GetMusicAudioSource().Stop();
-        else AudioManager.Instance.GetMusicAudioSource().Play();
+        LevelManager.Instance.IncreaseMaxActiveLevel();
+        DialogManager.Instance.ShowDialog(dialogPrefab.name);
+        SoundFXManager.Instance.PlaySoundFX(winningAudioClip);
     }
 }

@@ -1,23 +1,27 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerVisual), typeof(Rigidbody2D))]
-public class PlayerController : MonoBehaviour, ITeleportable
+public class PlayerController : MonoBehaviour, ITeleportable, ISaveableObject
 {
     public PlayerInfor playerInfor { get; private set; }
     public PlayerVisual playerVisual { get; private set; }
+    public PlayerEffectHandler playerEffectHandler { get; private set; }
 
     [SerializeField] MapSideTeleportEvent mapSideTeleportEvent;
     [SerializeField] GroundCheck groundCheck;
 
-    List<KeyValuePair<string, Vector2>> velocityModifiers = new List<KeyValuePair<string, Vector2>>();
-    Vector2 externalVelocity = Vector2.zero;
-
-    Vector2 directionMove;
-
+    [SerializeField] float maxEnergy;
+    [SerializeField] float baseEnergySpeed;
+    [SerializeField] float baseWalkSpeed;
+    [SerializeField] float baseFlyForce;
     [SerializeField] float flashTime;
     [SerializeField] float flashSpeed;
+
+    List<KeyValuePair<string, Vector2>> velocityModifiers = new List<KeyValuePair<string, Vector2>>();
+    Vector2 externalVelocity = Vector2.zero;
+    Vector2 directionMove;
     float flashTimer = 0f;
     bool isFlash = false;
 
@@ -27,18 +31,21 @@ public class PlayerController : MonoBehaviour, ITeleportable
     private void Awake() {
         rb2d = GetComponent<Rigidbody2D>();
         playerInputHandler = GetComponent<PlayerInputHandler>();
+        playerEffectHandler = GetComponent <PlayerEffectHandler>();
 
-        playerInfor = new PlayerInfor(4f, 0.5f, 1f, 250f);
+        playerInfor = new PlayerInfor(maxEnergy, baseEnergySpeed, baseWalkSpeed, baseFlyForce);
         playerVisual = GetComponent<PlayerVisual>();
         playerVisual.SetPlayerInfor(playerInfor);
 
-        mapSideTeleportEvent.RaiseRegisterEvent(transform);
+        LevelDataManager.Instance.RegisterSaveableObject(name, this);
     }
 
     private void Start() {
         playerInputHandler.onWalk += Walk;
         playerInputHandler.onFly += Fly;
         playerInputHandler.onFlash += StartFlash;
+
+        mapSideTeleportEvent.RaiseRegisterEvent(transform);
     }
 
     private void Update() {
@@ -47,6 +54,10 @@ public class PlayerController : MonoBehaviour, ITeleportable
     }
 
     private void FixedUpdate() {
+        if (!playerInfor.CanControl) {
+            directionMove = Vector2.zero;
+        }
+
         Vector2 velocity = externalVelocity;
 
         if (playerInfor.OnGround) {
@@ -56,7 +67,7 @@ public class PlayerController : MonoBehaviour, ITeleportable
             rb2d.velocity = velocity;
         }
         else {
-            // if there is external force then set velocity
+            // Nếu có ngoại lực thì đặt vận tốc
             if (velocity.magnitude > 0) {
                 rb2d.velocity = velocity;
             }
@@ -64,7 +75,7 @@ public class PlayerController : MonoBehaviour, ITeleportable
     }
 
     void Walk(bool isWalk, Vector2 dirMove) {
-        if (!isWalk) {
+        if (!isWalk || !playerInfor.CanControl) {
             if (playerInfor.IsWalk) {
                 directionMove = Vector2.zero;
 
@@ -73,10 +84,13 @@ public class PlayerController : MonoBehaviour, ITeleportable
             }
             return;
         }
-        
-        if (isFlash) isFlash = false;
 
         if (playerInfor.OnGround) {
+            if (isFlash) {
+                isFlash = false;
+                RemoveVelocityModifier("PlayerFlash");
+            }
+
             playerInfor.SetDirMove(dirMove.x == 0 ? playerInfor.DirMove : dirMove.x > 0 ? -1 : 1);
             directionMove = dirMove;
             transform.localScale = new Vector3(playerInfor.DirMove, 1, 1);
@@ -87,24 +101,23 @@ public class PlayerController : MonoBehaviour, ITeleportable
     }
 
     void OnGroundHandle(bool onGround) {
-        playerInfor.SetOnGround(onGround);
-        if (playerInfor.OnGround) {
-            playerInfor.SetEnergySpeed(playerInfor.DefaultEnergySpeed * 4f);
-        }
-        else {
-            if (playerInfor.IsWalk)
-                Walk(false, Vector2.zero);
-            playerInfor.SetEnergySpeed(playerInfor.DefaultEnergySpeed);
-        }
+        if (playerInfor.OnGround != onGround) {
+            playerInfor.SetOnGround(onGround);
+            if (playerInfor.OnGround) {
+                playerEffectHandler.AddEffect(groundCheck.GetEffect());
+            }
+            else {
+                if (playerInfor.IsWalk)
+                    Walk(false, Vector2.zero);
+                playerEffectHandler.RemoveEffect(groundCheck.GetEffect());
+            }
 
-        playerVisual.UpdateVisualOnGround();
+            playerVisual.UpdateVisualOnGround();
+        }
     }
 
     void Fly(Vector2 dirMove) {
-        if (isFlash) {
-            isFlash = false;
-            RemoveVelocityModifier("PlayerFlash");
-        }
+        if (isFlash || !playerInfor.CanControl) return;
 
         if (playerInfor.Energy >= 1f) {
             playerInfor.SetDirMove(dirMove.x == 0 ? playerInfor.DirMove : dirMove.x > 0 ? -1 : 1);
@@ -118,7 +131,7 @@ public class PlayerController : MonoBehaviour, ITeleportable
     }
 
     public void StartFlash(Vector2 flashDirection) {
-        if (isFlash) return;
+        if (isFlash || !playerInfor.CanControl) return;
 
         if (playerInfor.Energy >= 1.5f) {
             playerInfor.SetEnergy(playerInfor.Energy - 1.5f);
@@ -134,7 +147,7 @@ public class PlayerController : MonoBehaviour, ITeleportable
         bool isVertical = flashDirection.y > 0;
         playerVisual.UpdateVisualFlash(true, isVertical);
 
-        if (!isVertical) {
+        if (!isVertical && playerInfor.CanControl) {
             playerInfor.SetDirMove(-(int)flashDirection.x);
             transform.localScale = new Vector3(playerInfor.DirMove, 1, 1);
         }
@@ -160,33 +173,23 @@ public class PlayerController : MonoBehaviour, ITeleportable
         transform.position = newPos;
     }
 
-    public void SetPlayerData(PlayerData playerData) {
+    public void TakeDamage() {
+        playerVisual.UpdateVisualDamaged();
+    }
+
+    public void SetObjectData(ObjectData data) {
+        PlayerData playerData = data as PlayerData;
+
         transform.position = playerData.pos;
         playerInfor.SetDirMove((int)playerData.viewDir);
         transform.localScale = new Vector3(playerInfor.DirMove, 1, 1);
         rb2d.velocity = playerData.velocity;
         playerInfor.SetEnergy(playerData.energy);
+        OnGroundHandle(playerData.onground);
     }
 
-    public PlayerData GetPlayerData() {
-        return new PlayerData(transform.position, (PlayerMoveDir)playerInfor.DirMove, rb2d.velocity, playerInfor.Energy);
-    }
-
-    // will improve later
-    public float GetWalkSpeed() {
-        return playerInfor.WalkSpeed;
-    }
-
-    public void SetWalkSpeed(float value) {
-        playerInfor.SetWalkSpeed(value);
-    }
-
-    public float GetFlyForce() {
-        return playerInfor.FlyForce;
-    }
-
-    public void SetFlyForce(float value) {
-        playerInfor.SetFlyForce(value);
+    public ObjectData GetObjectData() {
+        return new PlayerData(transform.position, (PlayerMoveDir)playerInfor.DirMove, rb2d.velocity, playerInfor.Energy, playerInfor.OnGround);
     }
 
     public void AddVelocityModifier(string source, Vector2 velocity) {
@@ -207,25 +210,18 @@ public class PlayerController : MonoBehaviour, ITeleportable
         return velocity;
     }
 
-    public bool OnGround() {
-        return playerInfor.OnGround;
-    }
-
     private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision != null) {
-            Animal animal = collision.GetComponent<Animal>();
-            if (animal != null) {
-                int food = animal.Collected();
-                PlayerDataManager.Instance.Food += food;
-            }
+        ICollected collected = collision.GetComponent<ICollected>();
+        if (collected != null) {
+            collected.Collect();
         }
     }
 
     private void OnEnable() {
-        groundCheck.onGroundEvent.AddListener(OnGroundHandle);
+        groundCheck.onGroundEvent += OnGroundHandle;
     }
 
     private void OnDisable() {
-        groundCheck.onGroundEvent.RemoveListener(OnGroundHandle);
+        groundCheck.onGroundEvent -= OnGroundHandle;
     }
 }

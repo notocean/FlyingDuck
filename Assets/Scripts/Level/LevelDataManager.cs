@@ -1,37 +1,66 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelDataManager : MonoBehaviour
 {
-    private Dictionary<string, Tile> tiles = new Dictionary<string, Tile>();
-    private Dictionary<string, Animal> animals = new Dictionary<string, Animal>();
+    private static LevelDataManager _instance;
+    public static LevelDataManager Instance {
+        get {
+            if (_instance == null) {
+                _instance = FindObjectOfType<LevelDataManager>();
+                if (_instance == null) {
+                    _instance = new GameObject("LevelDataManager").AddComponent<LevelDataManager>();
+                }
+            }
+            return _instance;
+        }
+    }
+
+    private Dictionary<string, ISaveableObject> saveableObjects = new Dictionary<string, ISaveableObject>();
+    LevelData levelData;
+
+    // Đảm bảo rằng các đối tượng đã đăng ký vào saveableObjects
+    bool isReady = false;
 
     private void Awake() {
-        GameManager.Instance.SetLevelDataManager(this);
+        if (_instance != null && _instance != this) {
+            Destroy(gameObject);
+        }
+        else {
+            _instance = this;
+            levelData = LevelManager.Instance.GetCurrentLevelData();
+            StartCoroutine(WaitForEndFrame());
+        }
     }
 
-    public Dictionary<string, Tile> GetTileObjects() {
-        if (tiles.Count == 0) {
-            Tile[] t = FindObjectsByType<Tile>(FindObjectsSortMode.None);
-            foreach (Tile tile in t) {
-                if (tile != null) {
-                    tiles.Add(tile.name, tile);
-                }
-            }
-        }
-        return tiles;
+    IEnumerator WaitForEndFrame() {
+        // Chờ đến frame tiếp theo
+        yield return null;
+        isReady = true;
     }
 
-    public Dictionary<string, Animal> GetAnimalObjects() {
-        if (animals.Count == 0) {
-            Animal[] a = FindObjectsByType<Animal>(FindObjectsSortMode.None);
-            foreach (Animal animal in a) {
-                if (animal != null) {
-                    animals.Add(animal.name, animal);
-                }
-            }
+    public void RegisterSaveableObject(string name, ISaveableObject saveableObject) {
+        saveableObjects.Add(name, saveableObject);
+    }
+
+    public IEnumerator LoadLevelData() {
+        yield return new WaitUntil(() => isReady);
+
+        foreach (KeyValuePair<string, ISaveableObject> saveableObject in saveableObjects) {
+            saveableObject.Value.SetObjectData(levelData.objectDataWrapper[saveableObject.Key].data);
         }
-        return animals;
+    }
+
+    public IEnumerator LoadLevelData(string name) {
+        yield return new WaitUntil(() => isReady);
+
+        saveableObjects[name].SetObjectData(levelData.objectDataWrapper[name].data);
+    }
+
+    public void SaveLevelData() {
+        foreach (KeyValuePair<string, ISaveableObject> saveableObject in saveableObjects) {
+            levelData.objectDataWrapper.Add(saveableObject.Key, new ObjectDataWrapper(saveableObject.Value.GetObjectData()));
+        }
     }
 }

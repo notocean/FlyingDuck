@@ -15,13 +15,7 @@ MonoBehaviour:
   centerOfWorld: 0
   minHorizontalWorld: -5
   maxHorizontalWorld: 5
-  holdPoint: 0.3
-  onMusicValueChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  musicValue: 0
-  onVfxValueChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  vfxValue: 0
-  isTutorial: 0
+  HoldPoint: 0.4
+  MusicVolume: 0.5
+  SoundFXVolume: 0.5
+  isTutorial: 1

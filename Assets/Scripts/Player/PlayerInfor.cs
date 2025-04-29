@@ -1,132 +1,123 @@
-﻿using System.Collections.Generic;
-using Unity.VisualScripting;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerInfor
 {
-    // default value to reset
-    public float MaxEnergy { get; private set; }
+    // Giá trị cơ sở ban đầu
+    public float MaxEnergy { get; }
+    public float BaseEnergySpeed { get; }
+    public float BaseWalkSpeed { get; }
+    public float BaseFlyForce { get; }
 
-    private float baseEnergySpeed;
-    private float baseWalkSpeed;
-    private float baseFlyForce;
+    // Giá trị cơ sở thứ hai
+    // Các trang phục có hiệu ứng sau này sẽ thêm hiệu ứng vào đây
+    // Các hiệu ứng này được thêm lên đầu tiên 
+    public float DefaultEnergySpeed { get; private set; }
+    public float DefaultWalkSpeed { get; private set; }
+    public float DefaultFlyForce { get; private set; }
 
-    public float DefaultEnergySpeed {
-        get {
-            float modifiedEnergySpeed = baseEnergySpeed;
-            foreach (var mod in energySpeedModifiers) modifiedEnergySpeed += mod.Value;
-            return modifiedEnergySpeed;
-        }
-    }
+    // Giá trị hiện tại
+    // Các hiệu ứng từ các ngoại vật sẽ được thêm trực tiếp vào đây
+    public float Energy { get; private set; }
+    public float EnergySpeed { get; private set; }
+    public float WalkSpeed { get; private set; }
+    public float FlyForce { get; private set; }
+    public bool IsImmune { get; private set; }
+    public bool CanControl { get; private set; }
+    public int DirMove { get; private set; }
+    public bool OnGround { get; private set; }
+    public bool IsWalk { get; private set; }
 
-    public float DefaultWalkSpeed {
-        get {
-            float modifiedWalkSpeed = baseWalkSpeed;
-            foreach (var mod in walkSpeedModifiers) modifiedWalkSpeed += mod.Value;
-            return modifiedWalkSpeed;
-        }
-    }
-
-    public float DefaultFlyForce {
-        get {
-            float modifiedFlyForce = baseFlyForce;
-            foreach (var mod in flyForceModifiers) modifiedFlyForce += mod.Value;
-            return modifiedFlyForce;
-        }
-    }
-
-    // current value
-    private float energy;
-    private float energySpeed;
-    private float walkSpeed;
-    private float flyForce;
-    private bool isImmune;
-    private int dirMove;
-    private bool onGround;
-    private bool isWalk;
-
-    public float Energy => energy;
-    public float EnergySpeed => energySpeed; 
-    public float WalkSpeed => walkSpeed;
-    public float FlyForce => flyForce;
-    public bool IsImmune => isImmune; 
-    public int DirMove => dirMove;
-    public bool OnGround => onGround;
-    public bool IsWalk => isWalk;
-
-    // modifiers of default value
     private List<KeyValuePair<string, float>> energySpeedModifiers = new List<KeyValuePair<string, float>>();
     private List<KeyValuePair<string, float>> walkSpeedModifiers = new List<KeyValuePair<string, float>>();
     private List<KeyValuePair<string, float>> flyForceModifiers = new List<KeyValuePair<string, float>>();
 
     public PlayerInfor(float maxEnergy, float baseEnergySpeed, float baseWalkSpeed, float baseFlyForce) {
         MaxEnergy = maxEnergy;
-        this.baseEnergySpeed = baseEnergySpeed;
-        this.baseWalkSpeed = baseWalkSpeed;
-        this.baseFlyForce = baseFlyForce;
+        BaseEnergySpeed = baseEnergySpeed;
+        BaseWalkSpeed = baseWalkSpeed;
+        BaseFlyForce = baseFlyForce;
 
-        energy = 0;
-        energySpeed = baseEnergySpeed;
-        walkSpeed = baseWalkSpeed;
-        flyForce = baseFlyForce;
-        isImmune = false;
-        dirMove = 1;
+        UpdateDefaultEnergySpeed();
+        UpdateDefaultWalkSpeed();
+        UpdateDefaultFlyForce();
 
-        onGround = false;
-        isWalk = false;
+        Energy = 0;
+        EnergySpeed = baseEnergySpeed;
+        WalkSpeed = baseWalkSpeed;
+        FlyForce = baseFlyForce;
+        IsImmune = false;
+        CanControl = true;
+        DirMove = 1;
+        OnGround = false;
+        IsWalk = false;
     }
 
-    private void SetValue(ref float target, float value, float defaultValue) {
-        if (value >= 0) target = value;
-        else target = defaultValue;
-    }
+    public void SetEnergy(float value) => Energy = (value >= 0) ? Mathf.Clamp(value, 0, MaxEnergy) : 0;
 
-    public void SetEnergy(float value) => energy = (value >= 0) ? Mathf.Clamp(value, 0, MaxEnergy) : 0;
+    public void SetEnergySpeed(float value) => EnergySpeed = (value >= 0) ? value : 0;
 
-    public void SetEnergySpeed(float value) => SetValue(ref energySpeed, value, DefaultEnergySpeed);
+    public void SetWalkSpeed(float value) => WalkSpeed = (value >= 0) ? value : 0;
 
-    public void SetWalkSpeed(float value) => SetValue(ref walkSpeed, value, DefaultWalkSpeed);
+    public void SetFlyForce(float value) => FlyForce = (value >= 0) ? value : 0;
 
-    public void SetFlyForce(float value) => SetValue(ref flyForce, value, DefaultFlyForce);
+    public void SetImmune(bool value) => IsImmune = value;
 
-    public void SetImmune(bool value) {
-        isImmune = value;
-    }
+    public void SetControl(bool value) => CanControl = value;
 
-    public void SetDirMove(int value) => dirMove = (value != 0) ? value : 1;
+    public void SetDirMove(int value) => DirMove = (value != 0) ? value : 1;
 
-    public void SetOnGround(bool value) => onGround = value;
+    public void SetOnGround(bool value) => OnGround = value;
 
-    public void SetIsWalk(bool value) => isWalk = value;
+    public void SetIsWalk(bool value) => IsWalk = value;
 
     public void AddEnergySpeedModifier(string source, float value) {
         energySpeedModifiers.Add(new KeyValuePair<string, float>(source, value));
-        energySpeed = DefaultEnergySpeed;
+        UpdateDefaultEnergySpeed();
     }
 
     public void RemoveEnergySpeedModifier(string source) {
         energySpeedModifiers.RemoveAll(mod => mod.Key == source);
-        energySpeed = DefaultEnergySpeed;
+        UpdateDefaultEnergySpeed();
     }
 
-    public void AddwalkSpeedModifier(string source, float value) {
+    void UpdateDefaultEnergySpeed() {
+        float modifiedEnergySpeed = BaseEnergySpeed;
+        foreach (var mod in energySpeedModifiers) modifiedEnergySpeed += mod.Value;
+        DefaultEnergySpeed = modifiedEnergySpeed;
+    }
+
+    public void AddWalkSpeedModifier(string source, float value) {
         walkSpeedModifiers.Add(new KeyValuePair<string, float>(source, value));
-        walkSpeed = DefaultWalkSpeed;
+        UpdateDefaultWalkSpeed();
     }
 
     public void RemoveWalkSpeedModifier(string source) {
         walkSpeedModifiers.RemoveAll(mod => mod.Key == source);
-        walkSpeed = DefaultWalkSpeed;
+        UpdateDefaultWalkSpeed();
+    }
+
+    void UpdateDefaultWalkSpeed() {
+        float modifiedWalkSpeed = BaseWalkSpeed;
+        foreach (var mod in walkSpeedModifiers) modifiedWalkSpeed += mod.Value;
+        DefaultWalkSpeed = modifiedWalkSpeed;
     }
 
     public void AddFlyForceModifier(string source, float value) {
         flyForceModifiers.Add(new KeyValuePair<string, float>(source, value));
-        flyForce = DefaultFlyForce;
+        UpdateDefaultFlyForce();
     }
 
     public void RemoveFlyForceModifier(string source) {
         flyForceModifiers.RemoveAll(mod => mod.Key == source);
-        flyForce = DefaultFlyForce;
+        UpdateDefaultFlyForce();
+    }
+
+    void UpdateDefaultFlyForce() {
+        float modifiedFlyForce = BaseFlyForce;
+        foreach (var mod in flyForceModifiers) modifiedFlyForce += mod.Value;
+        DefaultFlyForce = modifiedFlyForce;
     }
 }
 
@@ -135,16 +126,18 @@ public enum PlayerMoveDir {
 }
 
 [System.Serializable]
-public struct PlayerData {
+public class PlayerData : ObjectData {
     public Vector2 pos;
     public PlayerMoveDir viewDir;
     public Vector2 velocity;
     public float energy;
+    public bool onground;
 
-    public PlayerData(Vector2 pos, PlayerMoveDir viewDir, Vector2 velocity, float energy) {
+    public PlayerData(Vector2 pos, PlayerMoveDir viewDir, Vector2 velocity, float energy, bool onground) {
         this.pos = pos;
         this.viewDir = viewDir;
         this.velocity = velocity;
         this.energy = energy;
+        this.onground = onground;
     }
 }

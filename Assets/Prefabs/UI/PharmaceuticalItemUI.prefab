@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6880564912535853199}
   - component: {fileID: 566297615882475443}
   - component: {fileID: 6773211639727460361}
-  - component: {fileID: 122553747486880566}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -36,7 +35,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: -40}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &566297615882475443
 CanvasRenderer:
@@ -76,20 +75,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &122553747486880566
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2169071460540556205}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AspectMode: 2
-  m_AspectRatio: 0.76
 --- !u!1 &8005719900111644748
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,6 +227,7 @@ MonoBehaviour:
   selectedSprite: {fileID: -1546609090, guid: a8f5ec4a2c4d011499941fa5498e2e05, type: 3}
   pharmaceuticalImage: {fileID: 6773211639727460361}
   countText: {fileID: 2385202692102829972}
+  attentionPrefab: {fileID: 1648031348685499733, guid: 2880261407ad6a941ab338fe3dbcdb49, type: 3}
 --- !u!114 &2444047475082858976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,7 +240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67c54082be529e44aad99d569eb8bbeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioClip: {fileID: 8300000, guid: 346b51cb691599046a17c0cede637fd9, type: 3}
+  audioClip: {fileID: 8300000, guid: 775859d73d8b06a4488af0580b485ab3, type: 3}
 --- !u!1 &9119669372263558986
 GameObject:
   m_ObjectHideFlags: 0

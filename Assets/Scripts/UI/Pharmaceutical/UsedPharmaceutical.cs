@@ -1,51 +1,40 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UsedPharmaceutical : MonoBehaviour
 {
     [SerializeField] Image fillImage;
-    Animator animator;
-
+    PlayerEffectHandler playerEffectHandler;
     Pharmaceutical pharmaceutical;
 
-    int index;
-    float timer;
+    float timeRemaining;
     float effectTime;
 
-    private void Awake() {
-        animator = GetComponent<Animator>();
-    }
-
-    public void Initial(int index, float timer) {
-        this.index = index;
-        this.timer = timer;
-        pharmaceutical = PharmaceuticalList.Instance.pharmaceuticals[index];
+    public void Initial(PlayerEffectHandler playerEffectHandler, Pharmaceutical pharmaceutical, float timeRemaining) {
+        this.playerEffectHandler = playerEffectHandler;
+        this.timeRemaining = timeRemaining;
+        this.pharmaceutical = pharmaceutical;
 
         effectTime = pharmaceutical.effectTime;
-
-        foreach (Image image in GetComponentsInChildren<Image>()) {
-            image.sprite = pharmaceutical.sprite;
-        }
 
         StartCoroutine(CountDown());
     }
 
     IEnumerator CountDown() {
-        GameObject player = GameManager.Instance.Player;
-        pharmaceutical.ApplyEffect(player);
+        pharmaceutical.ApplyEffect(playerEffectHandler);
+        int index = GameManager.Instance.LevelIndex - 1;
 
-        while (timer > 0) {
-            timer -= Time.deltaTime;
-            fillImage.fillAmount = timer / effectTime;
-            pharmaceutical.timeRemaining = timer;
+        while (timeRemaining > 0) {
+            timeRemaining -= Time.deltaTime;
+            fillImage.fillAmount = 1 - timeRemaining / effectTime;
+            pharmaceutical.timeRemainingList[index] = timeRemaining;
 
             yield return null;
         }
 
-        animator.SetTrigger("End");
-        pharmaceutical.EndEffect(player);
-        PharmaceuticalList.Instance.FinishUsePharmaceutical(index);
+        pharmaceutical.timeRemainingList[index] = 0;
+        playerEffectHandler.RemoveEffect(pharmaceutical);
+        PharmaceuticalManager.Instance.pharmaceuticalChanged?.Invoke(pharmaceutical.index);
     }
 }

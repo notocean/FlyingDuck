@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum InputAreaType { None, Top, TopMiddle, Middle, Bottom }
@@ -14,24 +13,28 @@ public class PlayerInputHandler : MonoBehaviour
 {
     [SerializeField] PlayerInputEvent playerInputEvent;
 
-    InputAreaType areaType = InputAreaType.None;
-    InputStateType stateType = InputStateType.Release;
-    float inputAngle = 0f;
-
     [SerializeField] float angleOfTop;
     [SerializeField] float angleOfTopMiddle;
     [SerializeField] float angleOfBottom;
-    [SerializeField] float clampedAngle;                // the character just flies with this angle, larger angle must be converted to
+    [SerializeField] float clampAngle;                // Nhân vật chỉ được bay với góc này
+    [SerializeField] float deadZone;
+    [SerializeField] float dragThreshold;
+    [SerializeField] float maxDragTime;
 
+    InputAreaType areaType = InputAreaType.None;
+    InputStateType stateType = InputStateType.Release;
+
+    float inputAngle = 0f;
     float timer = 0f;
     Vector2 currentInput = Vector2.zero;
     Vector2 initialInput = Vector2.zero;
     bool isWalk = false;
 
-    [SerializeField] float dragBeginThreshold = 0.1f;
-    [SerializeField] float dragThreshold = 0.5f; 
-    [SerializeField] float maxDragTime = 0.5f;
     DragType dragType = DragType.None;
+    // Có một deadzone ở giữa joystick
+    // Nếu người dùng bắt đầu kéo từ deadzone thì được tính là kéo
+    // Nếu người dùng bắt đầu kéo từ ngoài deadzone thì không được tính
+    bool canDragTypeChange = false;
 
     public Action<bool, Vector2> onWalk;
     public Action<Vector2> onFly;
@@ -43,7 +46,7 @@ public class PlayerInputHandler : MonoBehaviour
                 onWalk?.Invoke(true, currentInput);
             }
             else {
-                // stop if drag joystick on top or topmiddle area
+                // Dừng di chuyển nếu input ở vị trí bay
                 onWalk?.Invoke(false, Vector2.zero);
             }
         }
@@ -56,17 +59,24 @@ public class PlayerInputHandler : MonoBehaviour
 
         switch (joystickState) {
             case JoystickState.Press:
-                if (areaType >= InputAreaType.Middle) {
-                    isWalk = true;
-                }
                 initialInput = input;
-                if (input.magnitude < dragBeginThreshold)
+                if (input.magnitude < deadZone) {
+                    canDragTypeChange = true;
                     StartCoroutine(DetectDrag());
+                }
+                else {
+                    canDragTypeChange = false;
+                    if (areaType >= InputAreaType.Middle) {
+                        isWalk = true;
+                    }
+                }
                 StartCoroutine(DetectHold());
                 break;
             case JoystickState.Drag:
-                if (areaType >= InputAreaType.Middle) {
-                    isWalk = true;
+                if (!canDragTypeChange || stateType == InputStateType.Hold) {
+                    if (areaType >= InputAreaType.Middle) {
+                        isWalk = true;
+                    }
                 }
                 break;
             case JoystickState.Release:
@@ -105,7 +115,7 @@ public class PlayerInputHandler : MonoBehaviour
             return InputAreaType.None;
 
         input = input.normalized;
-        inputAngle = Mathf.Rad2Deg * Mathf.Asin(input.x);
+        inputAngle = Mathf.Atan2(input.x, input.y) * Mathf.Rad2Deg;
 
         if (input.y > 0) {
             if (Mathf.Abs(inputAngle) <= angleOfTop)
@@ -121,10 +131,9 @@ public class PlayerInputHandler : MonoBehaviour
         }
     }
 
-    // convert vector to this if that vector has an angle that is larger than the clamped angle
     Vector2 ConvertToClampedAngle() {
-        float newAngle = (-clampedAngle + (inputAngle + angleOfTopMiddle) * (clampedAngle / angleOfTopMiddle)) * Mathf.Deg2Rad;
-        return new Vector2(Mathf.Sin(newAngle), Mathf.Cos(newAngle));
+        float clampedAngle = CustomMathf.MapValue(inputAngle, 0, angleOfTopMiddle, 0, clampAngle) * Mathf.Deg2Rad;
+        return new Vector2(Mathf.Sin(clampedAngle), Mathf.Cos(clampedAngle));
     }
 
     IEnumerator DetectDrag() {
@@ -139,11 +148,11 @@ public class PlayerInputHandler : MonoBehaviour
             timer += Time.deltaTime;
 
             Vector2 dragDelta = currentInput - startPos;
-            float currentAngle = Mathf.Atan2(dragDelta.y, dragDelta.x) * Mathf.Rad2Deg;
+            float currentAngle = Mathf.Atan2(dragDelta.x, dragDelta.y) * Mathf.Rad2Deg;
 
-            if (dragDelta.magnitude > dragBeginThreshold) {
+            if (dragDelta.magnitude > deadZone) {
                 if (!isBeginDragging) {
-                    previousAngle = Mathf.Atan2(dragDelta.y, dragDelta.x) * Mathf.Rad2Deg;
+                    previousAngle = Mathf.Atan2(dragDelta.x, dragDelta.y) * Mathf.Rad2Deg;
                     previousDragLength = dragDelta.magnitude;
                     isBeginDragging = true;
                 }
@@ -158,18 +167,19 @@ public class PlayerInputHandler : MonoBehaviour
             if (dragDelta.magnitude > dragThreshold) {
                 if (!isDragging) {
                     isDragging = true;
-                    if (currentAngle > 60 && currentAngle <= 120) {
+                    if (currentAngle >= -30 && currentAngle <= 30) {
                         dragType = DragType.Top;
                     }
-                    else if (currentAngle > -30 && currentAngle <= 30) {
+                    else if (currentAngle >= 60 && currentAngle <= 120) {
                         dragType = DragType.Right;
                     }
-                    else if (currentAngle > -120 && currentAngle <= -60) {
-                        dragType = DragType.Down;
-                    }
-                    else {
+                    else if (currentAngle >= -120 && currentAngle <= -60) {
                         dragType = DragType.Left;
                     }
+                    else if (currentAngle >= 150 || currentAngle <= -150) {
+                        dragType = DragType.Down;
+                    }
+                    else dragType = DragType.None;
                 }
             }
 
@@ -202,12 +212,15 @@ public class PlayerInputHandler : MonoBehaviour
     IEnumerator DetectHold() {
         timer = 0f;
 
-        while (stateType != InputStateType.Hold && timer < GameSettings.Instance.holdPoint) {
+        while (stateType != InputStateType.Hold && timer < GameSettings.Instance.HoldPoint) {
             yield return null;
             timer += Time.deltaTime;
 
-            if (timer >= GameSettings.Instance.holdPoint) {
+            if (timer >= GameSettings.Instance.HoldPoint) {
                 stateType = InputStateType.Hold;
+                dragType = DragType.None;
+                OnJoystickInputChanged(JoystickState.Press, currentInput);
+                StopAllCoroutines();
                 break;
             }
         }

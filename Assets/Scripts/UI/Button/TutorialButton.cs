@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,8 +7,12 @@ public class TutorialButton : MonoBehaviour
     [SerializeField] Canvas talkCanvas;
     [SerializeField] Dialog tutorialDialog;
 
+    GameManager gameManager;
+
     private void Awake() {
         button = GetComponent<Button>();
+
+        gameManager = GameManager.Instance;
     }
 
     private void Start() {
@@ -30,6 +32,8 @@ public class TutorialButton : MonoBehaviour
     }
 
     private void OnDisable() {
-        GameManager.Instance.DoTutorialChanged -= SetVisual;
+        if (gameManager != null) {
+            gameManager.DoTutorialChanged -= SetVisual;
+        }
     }
 }

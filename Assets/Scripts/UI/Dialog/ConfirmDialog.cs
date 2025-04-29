@@ -1,0 +1,17 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+public class ConfirmDialog : NotificationDialog
+{
+    [SerializeField] protected Button confirmBtn;
+
+    protected override void Start() {
+        base.Start();
+        confirmBtn.onClick.AddListener(Confirm);
+    }
+
+    public void Confirm() {
+        tcs?.TrySetResult(true);
+        base.HideDialog();
+    }
+}

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,14 +14,14 @@ public class DuckHairUI : MonoBehaviour
     }
 
     private void SetHair() {
-        image.sprite = HairOutfitList.Instance.GetCurrentHair();
+        image.sprite = HairOutfitManager.Instance.GetCurrentHair();
     }
 
     private void OnEnable() {
-        HairOutfitList.Instance.hairOutfitChanged.AddListener(SetHair);
+        HairOutfitManager.Instance.hairOutfitChanged += SetHair;
     }
 
     private void OnDisable() {
-        HairOutfitList.Instance.hairOutfitChanged.RemoveListener(SetHair);
+        HairOutfitManager.Instance.hairOutfitChanged -= SetHair;
     }
 }

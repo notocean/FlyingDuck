@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37141b12cbcc3a84eb23d483e5bfadc4, type: 3}
+  m_Name: PharmaceuticalManager
+  m_EditorClassIdentifier: 
+  pharmaceuticalList:
+  - {fileID: 11400000, guid: 09af6d56ed743384e8099acbe18ceb70, type: 2}
+  - {fileID: 11400000, guid: b34cfa1a02c20a943bf6ccd30350e557, type: 2}
+  - {fileID: 11400000, guid: da9908d4445bf1440ba1210ffee35965, type: 2}
+  currentPharmaceuticalIndex: -1

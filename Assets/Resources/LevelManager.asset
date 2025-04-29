@@ -14,19 +14,56 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentLevelIndex: 0
   maxActiveLevelIndex: 0
-  maxAvaiableLevelIndex: 0
+  maxAvaiableLevelIndex: 2
+  levelCount: 3
   levelUISprites:
-  - {fileID: 11400000, guid: c6c94ad5d0c116849b57e6da12cdf739, type: 2}
-  - {fileID: 11400000, guid: fa3e7771f2231e5419c467a725518f94, type: 2}
-  - {fileID: 11400000, guid: 06b39696ff70baa429b2904e3c8a89f7, type: 2}
+  - topSprite: {fileID: 21300000, guid: 9ce03fc0339e6a142a87297fa37c170c, type: 3}
+    centerSprite: {fileID: 21300000, guid: fdc91c5c4dfc67a42904bd5f31146496, type: 3}
+    leftSprite: {fileID: 21300000, guid: 2b0ac38d99ff08d4c8fd2db28601995d, type: 3}
+    rightSprite: {fileID: 21300000, guid: 093c9e958617f9b488a737133b4f5d47, type: 3}
+  - topSprite: {fileID: 21300000, guid: 91c75343b371e7f41b318ad7c96d868f, type: 3}
+    centerSprite: {fileID: 21300000, guid: 846bbd36ee34a5e4b9b430fee83373f2, type: 3}
+    leftSprite: {fileID: 21300000, guid: 8d4e3c8785d35c24493e3824bd8e72db, type: 3}
+    rightSprite: {fileID: 21300000, guid: c38c070674b6ecb4f8e3ae4a4b701c52, type: 3}
+  - topSprite: {fileID: 21300000, guid: df3c47e7a7e41c14c9a9c7bd1d5ef55c, type: 3}
+    centerSprite: {fileID: 21300000, guid: 28d839a0b8bff32469c167fbb5bc31e5, type: 3}
+    leftSprite: {fileID: 21300000, guid: c9e2cd622ea20b14e8d2ac82216b809c, type: 3}
+    rightSprite: {fileID: 21300000, guid: 5f6083482ebe55d4aa2101e8fca63501, type: 3}
   defaultLevelData:
-  - {fileID: 11400000, guid: 39ffb929a0aa0854592a8683f012a0f9, type: 2}
-  - {fileID: 11400000, guid: 55efcdb0dcadac84a82f75f03d7248bd, type: 2}
-  - {fileID: 11400000, guid: fe8e3083c69cf2e4d98e7518f0608ad0, type: 2}
+  - index: 0
+    isSaved: 0
+    objectDataWrapper:
+      keys: []
+      values: []
+  - index: 1
+    isSaved: 0
+    objectDataWrapper:
+      keys: []
+      values: []
+  - index: 2
+    isSaved: 0
+    objectDataWrapper:
+      keys: []
+      values: []
   levelData:
-  - {fileID: 11400000, guid: e2515abb92e8e4841a580d9653ef2e02, type: 2}
-  - {fileID: 11400000, guid: d69f0b109ff00494cae835296ff6eff5, type: 2}
-  - {fileID: 11400000, guid: bf056145b73d0fd40a17eb0dc757fa3c, type: 2}
+  - index: 0
+    isSaved: 0
+    objectDataWrapper:
+      keys: []
+      values: []
+  - index: 1
+    isSaved: 0
+    objectDataWrapper:
+      keys: []
+      values: []
+  - index: 2
+    isSaved: 0
+    objectDataWrapper:
+      keys: []
+      values: []
   levelSelectedChanged:
     m_PersistentCalls:
       m_Calls: []
+  references:
+    version: 2
+    RefIds: []

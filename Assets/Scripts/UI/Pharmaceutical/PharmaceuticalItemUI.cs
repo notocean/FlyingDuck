@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,8 +5,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Image))]
 [RequireComponent(typeof(Button))]
 public class PharmaceuticalItemUI : MonoBehaviour {
-    PharmaceuticalItemManager pharmaceuticalItemManager;
-    private int index;
+    public Pharmaceutical pharmaceutical { get; private set; }
 
     private Image backgroundImage;
     [SerializeField] private Sprite normalSprite;
@@ -16,7 +13,11 @@ public class PharmaceuticalItemUI : MonoBehaviour {
 
     [SerializeField] private Image pharmaceuticalImage;
     [SerializeField] private TMP_Text countText;
+
+    [SerializeField] GameObject attentionPrefab;
+
     private Button pharmaceuticalButton;
+    GameObject attentionObj;
 
     private void Awake() {
         backgroundImage = GetComponent<Image>();
@@ -27,13 +28,12 @@ public class PharmaceuticalItemUI : MonoBehaviour {
         pharmaceuticalButton.onClick.AddListener(ClickedHandle);
     }
 
-    public void Initial(Pharmaceutical pharmaceutical, PharmaceuticalItemManager pharmaceuticalItemManager, int index) {
-        this.pharmaceuticalItemManager = pharmaceuticalItemManager;
-        this.index = index;
+    public void Initial(Pharmaceutical pharmaceutical) {
+        this.pharmaceutical = pharmaceutical;
 
         SetActive(pharmaceutical.isActive);
         pharmaceuticalImage.sprite = pharmaceutical.sprite;
-        ShowCount(index);
+        ShowCount(pharmaceutical.index);
     }
 
     public void SetVisual(bool isSelected) {
@@ -55,26 +55,44 @@ public class PharmaceuticalItemUI : MonoBehaviour {
         }
     }
 
-    // will improve later about count
+    public void SetAttention(bool attention) {
+        if (attention) {
+            if (attentionObj == null) {
+                attentionObj = Instantiate(attentionPrefab, transform);
+            }
+        }
+        else {
+            if (attentionObj != null) {
+                Destroy(attentionObj);
+            }
+        }
+    }
+
     private void PharmaceuticalChanged(int index) {
-        if (this.index == index) {
+        if (pharmaceutical.index == index) {
             ShowCount(index);
         }
     }
 
     private void ShowCount(int index) {
-        countText.text = PharmaceuticalList.Instance.pharmaceuticals[index].count.ToString();
+        countText.text = PharmaceuticalManager.Instance.pharmaceuticalList[index].count.ToString();
     }
 
     private void ClickedHandle() {
-        PharmaceuticalList.Instance.SetCurrentPharmaceutical(index);
+        PharmaceuticalManager.Instance.SetCurrentPharmaceutical(pharmaceutical.index);
+
+        if (pharmaceutical.hasAttention) {
+            pharmaceutical.hasAttention = false;
+            SetAttention(false);
+            PharmaceuticalManager.Instance.UpdateAttention();
+        }
     }
 
     private void OnEnable() {
-        PharmaceuticalList.Instance.pharmaceuticalChanged.AddListener(PharmaceuticalChanged);
+        PharmaceuticalManager.Instance.pharmaceuticalChanged += PharmaceuticalChanged;
     }
 
     private void OnDisable() {
-        PharmaceuticalList.Instance.pharmaceuticalChanged.RemoveListener(PharmaceuticalChanged);
+        PharmaceuticalManager.Instance.pharmaceuticalChanged -= PharmaceuticalChanged;
     }
 }

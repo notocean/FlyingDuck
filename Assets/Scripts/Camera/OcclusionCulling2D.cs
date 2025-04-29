@@ -13,10 +13,7 @@ public class OcclusionCulling2D : MonoBehaviour
 
     private void Awake() {
         mainCamera = GetComponent<Camera>();
-    }
 
-    private void Start() {
-        occlusionCulling2DObjects.Clear();
         occlusionCulling2DObjects = FindObjectsByType<OcclusionCulling2DObject>(FindObjectsSortMode.None).ToList<OcclusionCulling2DObject>();
     }
 

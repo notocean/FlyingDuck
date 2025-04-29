@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -12,14 +10,18 @@ public class PharmaceuticalInfor : MonoBehaviour
     }
 
     private void SetText(int index = 0) {
-        inforText.text = PharmaceuticalList.Instance.GetCurrentPharmaceutical().infor;
+        Pharmaceutical pharmaceutical = PharmaceuticalManager.Instance.GetCurrentPharmaceutical();
+        if (pharmaceutical != null) {
+            inforText.text = pharmaceutical.Infor;
+        }
+        else inforText.text = "";
     }
 
     private void OnEnable() {
-        PharmaceuticalList.Instance.pharmaceuticalChanged.AddListener(SetText);
+        PharmaceuticalManager.Instance.pharmaceuticalChanged += SetText;
     }
 
     private void OnDisable() {
-        PharmaceuticalList.Instance.pharmaceuticalChanged.RemoveListener(SetText);
+        PharmaceuticalManager.Instance.pharmaceuticalChanged -= SetText;
     }
 }

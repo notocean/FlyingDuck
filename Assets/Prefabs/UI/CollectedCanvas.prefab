@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 5062050424528626920}
   - component: {fileID: 4539557294191460654}
   - component: {fileID: 8356116616854854392}
-  - component: {fileID: 8134331684720614483}
   m_Layer: 5
   m_Name: CollectedCanvas
   m_TagString: Untagged
@@ -87,7 +86,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &5062050424528626920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,22 +134,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 618523810369600468}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a9e4dd6f563cd54189250771526f9f2, type: 3}
+  m_Script: {fileID: 11500000, guid: 42ac24fd25c329144b903fe3a051c7d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8134331684720614483
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 618523810369600468}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67c54082be529e44aad99d569eb8bbeb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioClip: {fileID: 8300000, guid: ded568341bc314b408a22fea2d2f1aa0, type: 3}
 --- !u!1 &1880705096597368974
 GameObject:
   m_ObjectHideFlags: 0

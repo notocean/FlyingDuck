@@ -1,12 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "HairOutfit", menuName = "Duck/HairOutfit")]
-public class HairOutfit : ScriptableObject
+[System.Serializable]
+public class HairOutfit
 {
     public int index;
     public Sprite sprite;
     public Sprite spriteUI;
     public bool isActive;
+    public bool hasAttention;
 }

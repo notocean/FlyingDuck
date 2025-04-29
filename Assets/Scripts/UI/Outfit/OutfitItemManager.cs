@@ -7,36 +7,53 @@ public class OutfitItemManager : MonoBehaviour
     [SerializeField] private GameObject outfitUIObj;
     private List<OutfitItemUI> outfitItems = new List<OutfitItemUI>();
     private OutfitItemUI currentSelectedItem;
+    bool wasGenerated = false;
 
-    private void Start() {
-        List<HairOutfit> hairOutfits = HairOutfitList.Instance.hairOutfits;
+    IEnumerator Display() {
+        yield return null;
+
+        if (!wasGenerated) {
+            Generate();
+        }
+
+        Refresh();
+    }
+
+    private void Generate() {
+        wasGenerated = true;
+
+        List<HairOutfit> hairOutfits = HairOutfitManager.Instance.hairOutfits;
         for (int i = 0; i < hairOutfits.Count; i++) {
             outfitItems.Add(Instantiate(outfitUIObj, transform, false).GetComponentInChildren<OutfitItemUI>());
             outfitItems[i].Initial(hairOutfits[i]);
-            if (i == HairOutfitList.Instance.currentHairIndex) {
+            if (i == HairOutfitManager.Instance.currentHairIndex) {
                 currentSelectedItem = outfitItems[i];
                 currentSelectedItem.SetVisual(true);
             }
         }
     }
 
-    private void ActiveOutfit(int index) {
-        outfitItems[index].SetActive(true);
+    private void Refresh() {
+        foreach (OutfitItemUI outfitItemUI in outfitItems) {
+            HairOutfit hairOutfit = outfitItemUI.hairOutfit;
+            outfitItemUI.SetActive(hairOutfit.isActive);
+            outfitItemUI.SetAttention(hairOutfit.hasAttention);
+        }
     }
 
     private void SetSelectedItem() {
         currentSelectedItem.SetVisual(false);
-        currentSelectedItem = outfitItems[HairOutfitList.Instance.currentHairIndex];
+        currentSelectedItem = outfitItems[HairOutfitManager.Instance.currentHairIndex];
         currentSelectedItem.SetVisual(true);
     }
 
     private void OnEnable() {
-        HairOutfitList.Instance.hairOutfitChanged.AddListener(SetSelectedItem);
-        HairOutfitList.Instance.hairOutfitActived.AddListener(ActiveOutfit);
+        HairOutfitManager.Instance.hairOutfitChanged += SetSelectedItem;
+
+        StartCoroutine(Display());
     }
 
     private void OnDisable() {
-        HairOutfitList.Instance.hairOutfitChanged.RemoveListener(SetSelectedItem);
-        HairOutfitList.Instance.hairOutfitActived.RemoveListener(ActiveOutfit);
+        HairOutfitManager.Instance.hairOutfitChanged -= SetSelectedItem;
     }
 }

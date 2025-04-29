@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5a7b2b55b00f0744b10d1bf521fe7f4, type: 3}
+  m_Name: ResetData
+  m_EditorClassIdentifier: 
+  gameSettings: {fileID: 11400000, guid: 2f8b5e6ea9da8de478a34eb714a6d84f, type: 2}
+  hairOutfitManager: {fileID: 11400000, guid: f8e8de5d5a4c87445ac175dd98384dde, type: 2}
+  levelManager: {fileID: 11400000, guid: 68577744464f4474db739d2079303b85, type: 2}
+  pharmaceuticalManager: {fileID: 11400000, guid: 10c0845c13ecb694d8581a95b8035f05, type: 2}
+  playerDataManager: {fileID: 11400000, guid: 7de3a1eda82d2204da0e5a8bfe04522c, type: 2}
+  holdPoint: 0.45
+  musicValue: 0.25
+  vfxValue: 0.25
+  isTutorial: 1
+  currentHairIndex: 0
+  maxActiveHairIndex: 1
+  currentLevelIndex: 0
+  maxActiveLevelIndex: 1
+  maxAvaiableLevelIndex: 2
+  maxActivePharmaceuticalIndex: 0
+  food: 1000

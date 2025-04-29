@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class FoodUI : MonoBehaviour
@@ -29,7 +27,6 @@ public class FoodUI : MonoBehaviour
         float startScale = rectTrans.localScale.x;
         float targetScale = effectScale;
 
-        // stage 1
         while (timer < 1) {
             timer += Time.unscaledDeltaTime * effectSpeed;
             float scale = Mathf.Lerp(startScale, targetScale, timer);
@@ -39,7 +36,6 @@ public class FoodUI : MonoBehaviour
 
         rectTrans.localScale = new Vector3(effectScale, effectScale, effectScale);
 
-        // stage 2
         timer = 0;
         startScale = effectScale;
         targetScale = 1;

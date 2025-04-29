@@ -6,7 +6,7 @@ public class MapSideTeleportation : MonoBehaviour
 {
     [SerializeField] MapSideTeleportEvent mapSideTeleportEvent;
 
-    List<Transform> teleportableTransforms = new List<Transform>();
+    HashSet<Transform> teleportableTransforms = new HashSet<Transform>();
     Vector2 pos;
 
     float minHorizontalWorld;
@@ -21,7 +21,15 @@ public class MapSideTeleportation : MonoBehaviour
 
     private void RegisterTeleportableObject(Transform transform) {
         if (transform.GetComponent<ITeleportable>() != null) {
-            teleportableTransforms.Add(transform);
+            if (!teleportableTransforms.Contains(transform)) {
+                teleportableTransforms.Add(transform);
+            }
+        }
+    }
+
+    void UnregisterTeleportableObject(Transform transform) {
+        if (teleportableTransforms.Contains(transform)) {
+            teleportableTransforms.Remove(transform);
         }
     }
 
@@ -45,10 +53,12 @@ public class MapSideTeleportation : MonoBehaviour
     }
 
     private void OnEnable() {
-        mapSideTeleportEvent.RegisterEvent.AddListener(RegisterTeleportableObject);
+        mapSideTeleportEvent.RegisterEvent += RegisterTeleportableObject;
+        mapSideTeleportEvent.UnregisterEvent += UnregisterTeleportableObject;
     }
 
     private void OnDisable() {
-        mapSideTeleportEvent.RegisterEvent.RemoveListener(RegisterTeleportableObject);
+        mapSideTeleportEvent.RegisterEvent -= RegisterTeleportableObject;
+        mapSideTeleportEvent.RegisterEvent -= UnregisterTeleportableObject;
     }
 }

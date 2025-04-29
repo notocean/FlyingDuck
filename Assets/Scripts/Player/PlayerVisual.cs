@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,19 +11,21 @@ public class PlayerVisual : MonoBehaviour
     AudioSource audioSource;
 
     [SerializeField] AudioClip wingsFlapAudioClip;
+    [SerializeField] AudioClip flashAudioClip;
     [SerializeField] AudioClip walkAudioClip;
+    [SerializeField] AudioClip ongroundAudioClip;
+    [SerializeField] AudioClip damagedAudioClip;
 
     [SerializeField] float minWalkAnimationSpeed;
 
     [SerializeField] AnimationClip flyAnim;
-    // The time it takes to transition from where the current flight animation is to the time it can end the flight animation
-    // and transition to another flight animation.
+    // Nếu nhân vật đang bay (vỗ cánh) và thực hiện một hành động bay khác,
+    // Thời gian để nhân vật chuyển từ trạng thái bay hiện tại sang trạng thái khởi đầu để thực hiện một hành động bay khác.
     [SerializeField] float timeToSkipFlyAnimation;
-    // The flight animation can only be finished if the animation's time normalization is greater than or equal to this factor.
+    // Chỉ số đã chuẩn hóa của animation state mà nhân vật có thể chuyển sang trạng thái bay mới.
     [SerializeField] float skipFlyAnimationFactor;
     bool isProcessingFly = false;
     float flyAnimationLength;
-    float canEndFlyAnimationTime;
 
     [HideInInspector] public UnityEvent<float> energyVisualEvent = new UnityEvent<float>();
 
@@ -33,11 +34,7 @@ public class PlayerVisual : MonoBehaviour
     }
 
     private void Start() {
-        audioSource = AudioManager.Instance.GetVfxAudioSource();
-        audioSource.clip = walkAudioClip;
-
         flyAnimationLength = flyAnim.length;
-        canEndFlyAnimationTime = 0.75f * flyAnimationLength;
     }
 
     public void SetPlayerInfor(PlayerInfor playerInfor) {
@@ -54,6 +51,11 @@ public class PlayerVisual : MonoBehaviour
 
         if (animator.GetBool("Walk") != playerInfor.IsWalk) {
             animator.SetBool("Walk", playerInfor.IsWalk);
+            if (audioSource == null) {
+                audioSource = SoundFXManager.Instance.GetAudioSource();
+                audioSource.clip = walkAudioClip;
+            }
+
             if (playerInfor.IsWalk) {
                 audioSource.loop = true;
                 if (!audioSource.isPlaying) audioSource.Play();
@@ -62,12 +64,17 @@ public class PlayerVisual : MonoBehaviour
             else {
                 audioSource.loop = false;
                 audioSource.Stop();
+                SoundFXManager.Instance.ReturnAudioSource(audioSource);
+                audioSource = null;
             }
         }
     }
 
     public void UpdateVisualOnGround() {
         animator.SetBool("Flying", !playerInfor.OnGround);
+        if (playerInfor.OnGround) {
+            SoundFXManager.Instance.PlaySoundFX(ongroundAudioClip);
+        }
     }
 
     public void UpdateVisualFly() {
@@ -100,6 +107,13 @@ public class PlayerVisual : MonoBehaviour
         else {
             animator.SetBool("HorizontalFlash", isFlash);
         }
+        if (isFlash)
+            SoundFXManager.Instance.PlaySoundFX(flashAudioClip);
+    }
+
+    public void UpdateVisualDamaged() {
+        animator.SetTrigger("Damaged");
+        SoundFXManager.Instance.PlaySoundFX(damagedAudioClip);
     }
 
     IEnumerator ResetSpeedAndTriggerFly(float delay) {
@@ -112,6 +126,6 @@ public class PlayerVisual : MonoBehaviour
     void VisualFly() {
         animator.SetFloat("WingSpeed", 1f);
         animator.SetTrigger("Fly");
-        audioSource.PlayOneShot(wingsFlapAudioClip);
+        SoundFXManager.Instance.PlaySoundFX(wingsFlapAudioClip);
     }
 }

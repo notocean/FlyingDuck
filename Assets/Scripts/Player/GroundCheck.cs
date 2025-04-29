@@ -1,32 +1,31 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class GroundCheck : MonoBehaviour
 {
-    [SerializeField] LayerMask layerMask;
-    [SerializeField] AudioClip audioClip;
+    [SerializeField] Effect effect;
 
-    [HideInInspector] public UnityEvent<bool> onGroundEvent = new UnityEvent<bool>();
-    private bool onGround = false;
-
-    private void Start() {
-        onGroundEvent.Invoke(onGround = false);
-    }
+    public Action<bool> onGroundEvent;
+    bool hasRegisterPos = false;
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        if ((layerMask.value & (1 << collision.gameObject.layer)) != 0) {
-            onGroundEvent.Invoke(onGround = true);
-            AudioManager.Instance.PlayOneShot(audioClip);
+        onGroundEvent?.Invoke(true);
+    }
+
+    private void OnTriggerStay2D(Collider2D collision) {
+        if (hasRegisterPos) return;
+
+        int posIndex = TileManager.Instance.GetPosIndexByName(collision.name);
+        if (posIndex != -1) {
+            hasRegisterPos = TileManager.Instance.RegisterPos(posIndex);
         }
+        else hasRegisterPos = true;
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
-        if ((layerMask.value & (1 << collision.gameObject.layer)) != 0) {
-            onGroundEvent.Invoke(onGround = false);
-        }
+        onGroundEvent?.Invoke(false);
+        TileManager.Instance.UnregisterPos(TileManager.Instance.GetPosIndexByName(collision.name));
     }
 
-    public bool OnGround() {
-        return onGround;
-    }
+    public Effect GetEffect() => effect;
 }

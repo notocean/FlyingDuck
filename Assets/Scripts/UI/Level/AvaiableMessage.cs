@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class AvaiableMessage : MonoBehaviour
 {
@@ -19,7 +16,7 @@ public class AvaiableMessage : MonoBehaviour
     }
 
     private void DisplayMessage() {
-        if (levelManager.currentLevelIndex <= levelManager.maxAvaiableLevelIndex) {
+        if (levelManager.currentLevelIndex <= levelManager.MaxAvaiableLevelIndex) {
             canvasGroup.alpha = 0f;
         }
         else canvasGroup.alpha = alpha;

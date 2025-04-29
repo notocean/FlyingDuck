@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -14,6 +12,8 @@ public class TutorialStep {
     public bool hasHighlight;
     [SerializeField, ShowIf("hasHighlight")]
     public CanvasGroup canvasGroupHighlight;
+    [SerializeField, ShowIf("hasHighlight")]
+    public float delayHighlightTime;
     public int talkType;                    
 }
 
