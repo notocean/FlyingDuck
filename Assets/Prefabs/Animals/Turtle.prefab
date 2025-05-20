@@ -1344,8 +1344,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3770018196475716345}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.12, y: 0.5}
-  m_AnchorMax: {x: 0.88, y: 0.8}
+  m_AnchorMin: {x: 0.08, y: 0.36}
+  m_AnchorMax: {x: 0.92, y: 0.85}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1377,7 +1377,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "N\xF3i chuy\u1EC7n"
+  m_text: "N\u1EBFu ch\u01B0a nh\u1EDB c\xE1ch ch\u01A1i, h\xE3y n\xF3i chuy\u1EC7n
+    v\u1EDBi t\xF4i nh\xE9!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6c843383caae81f4fa3e98df6b2e2832, type: 2}
   m_sharedMaterial: {fileID: -2430469874478671944, guid: 6c843383caae81f4fa3e98df6b2e2832, type: 2}
@@ -1409,7 +1410,7 @@ MonoBehaviour:
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 0.1
-  m_fontSizeMax: 2
+  m_fontSizeMax: 0.2
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -2363,8 +2364,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.936, y: 0.877}
-  m_SizeDelta: {x: 1.5, y: 1}
+  m_AnchoredPosition: {x: 2.053, y: 0.938}
+  m_SizeDelta: {x: 2.5231, y: 1.4499}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &570058322897473646
 CanvasRenderer:
@@ -2613,7 +2614,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -9156867838365188483, guid: 1a789d321bf4a3148b239a32f8df8335, type: 3}
       propertyPath: m_SortingLayer
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: -9156867838365188483, guid: 1a789d321bf4a3148b239a32f8df8335, type: 3}
       propertyPath: m_SortingLayerID
@@ -2685,7 +2686,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4691381383639723871, guid: 1a789d321bf4a3148b239a32f8df8335, type: 3}
       propertyPath: m_SortingLayer
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: -4691381383639723871, guid: 1a789d321bf4a3148b239a32f8df8335, type: 3}
       propertyPath: m_SortingLayerID
@@ -2713,7 +2714,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 683650805199822136, guid: 1a789d321bf4a3148b239a32f8df8335, type: 3}
       propertyPath: m_SortingLayer
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 683650805199822136, guid: 1a789d321bf4a3148b239a32f8df8335, type: 3}
       propertyPath: m_SortingLayerID
@@ -2721,7 +2722,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1092641441002539719, guid: 1a789d321bf4a3148b239a32f8df8335, type: 3}
       propertyPath: m_SortingLayer
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1092641441002539719, guid: 1a789d321bf4a3148b239a32f8df8335, type: 3}
       propertyPath: m_SortingLayerID
@@ -2757,7 +2758,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5638863962959275187, guid: 1a789d321bf4a3148b239a32f8df8335, type: 3}
       propertyPath: m_SortingLayer
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5638863962959275187, guid: 1a789d321bf4a3148b239a32f8df8335, type: 3}
       propertyPath: m_SortingLayerID
@@ -2769,7 +2770,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7911765064071734371, guid: 1a789d321bf4a3148b239a32f8df8335, type: 3}
       propertyPath: m_SortingLayer
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7911765064071734371, guid: 1a789d321bf4a3148b239a32f8df8335, type: 3}
       propertyPath: m_SortingLayerID
@@ -2843,6 +2844,6 @@ SortingGroup:
   m_GameObject: {fileID: 8429630270255940360}
   m_Enabled: 1
   m_SortingLayerID: -1231738869
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_SortAtRoot: 0

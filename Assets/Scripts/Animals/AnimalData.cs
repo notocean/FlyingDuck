@@ -12,6 +12,10 @@ public class WormData : ObjectData {
         this.posIndex = posIndex;
         this.timer = timer;
     }
+
+    public override ObjectData Clone() {
+        return new WormData(pos, moveDir, posIndex, timer);
+    }
 }
 
 public class FrogData : ObjectData {
@@ -26,6 +30,10 @@ public class FrogData : ObjectData {
         this.targetJumpPosIndex = targetJumpPosIndex;
         this.timer = timer;
     }
+
+    public override ObjectData Clone() {
+        return new FrogData(elapsedTime, startJumpPosIndex, targetJumpPosIndex, timer);
+    }
 }
 
 public class ButterflyData : ObjectData {
@@ -37,5 +45,9 @@ public class ButterflyData : ObjectData {
         this.pos = pos;
         this.dirMove = dirMove;
         this.refreshTimer = refreshTimer;
+    }
+
+    public override ObjectData Clone() {
+        return new ButterflyData(pos, dirMove, refreshTimer);
     }
 }

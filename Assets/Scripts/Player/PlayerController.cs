@@ -64,13 +64,10 @@ public class PlayerController : MonoBehaviour, ITeleportable, ISaveableObject
             if (playerInfor.IsWalk) {
                 velocity += new Vector2(directionMove.x * playerInfor.WalkSpeed, 0);
             }
-            rb2d.velocity = velocity;
         }
-        else {
-            // Nếu có ngoại lực thì đặt vận tốc
-            if (velocity.magnitude > 0) {
-                rb2d.velocity = velocity;
-            }
+
+        if (velocity.magnitude > 0) {
+            rb2d.velocity = velocity;
         }
     }
 
@@ -104,6 +101,7 @@ public class PlayerController : MonoBehaviour, ITeleportable, ISaveableObject
         if (playerInfor.OnGround != onGround) {
             playerInfor.SetOnGround(onGround);
             if (playerInfor.OnGround) {
+                rb2d.velocity = Vector2.zero;
                 playerEffectHandler.AddEffect(groundCheck.GetEffect());
             }
             else {
@@ -120,6 +118,8 @@ public class PlayerController : MonoBehaviour, ITeleportable, ISaveableObject
         if (isFlash || !playerInfor.CanControl) return;
 
         if (playerInfor.Energy >= 1f) {
+            RemoveAllVelocityModifier();
+
             playerInfor.SetDirMove(dirMove.x == 0 ? playerInfor.DirMove : dirMove.x > 0 ? -1 : 1);
             playerInfor.SetEnergy(playerInfor.Energy - 1);
             rb2d.velocity = Vector2.zero;
@@ -200,6 +200,11 @@ public class PlayerController : MonoBehaviour, ITeleportable, ISaveableObject
     public void RemoveVelocityModifier(string source) {
         velocityModifiers.RemoveAll(mod => mod.Key == source);
         externalVelocity = CalculateExternalVelocity();
+    }
+
+    public void RemoveAllVelocityModifier() {
+        velocityModifiers.Clear();
+        externalVelocity = Vector2.zero;
     }
 
     Vector2 CalculateExternalVelocity() {

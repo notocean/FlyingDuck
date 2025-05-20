@@ -74,6 +74,8 @@ public class GameManager : MonoBehaviour
 
             levelManager = LevelManager.Instance;
             SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+
+            Application.targetFrameRate = 60;
         }
     }
 
@@ -103,10 +105,7 @@ public class GameManager : MonoBehaviour
         levelManager.SaveLevel();
 
         if (includeDefaultLevel) {
-            LevelData defaultLevelData = levelManager.GetDefaultLevelData();
-
-            defaultLevelData.isSaved = true;
-            defaultLevelData.objectDataWrapper = levelData.objectDataWrapper;
+            levelManager.SetDefaultLevelData(levelData);
 
             levelManager.SaveDefaultLevel();
         }

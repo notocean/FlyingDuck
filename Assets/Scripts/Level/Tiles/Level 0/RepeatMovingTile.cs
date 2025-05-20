@@ -25,8 +25,7 @@ public class RepeatMovingTile : MonoBehaviour, ISaveableObject
     Vector2 startPos, endPos;
     float movingTime;
 
-    Vector2 velocity = Vector2.zero;
-    PlayerController player;
+    public Action OnVelocityChanged;
 
     private void Awake() {
         rb2d = GetComponent<Rigidbody2D>();
@@ -44,49 +43,53 @@ public class RepeatMovingTile : MonoBehaviour, ISaveableObject
             InitAMove();
 
         timer += Time.fixedDeltaTime;
-        if (startPos != endPos) {
-            Vector2 newPos = Vector2.Lerp(startPos, endPos, timer / movingTime);
-            rb2d.MovePosition(newPos);
-        }
 
         if (timer > movingTime) {
             timer = 0f;
-            if (pointIndex == points.Count - 1)
-                pointIndex = 0;
-            else pointIndex++;
+            pointIndex = (pointIndex + 1) % points.Count;
         }
     }
 
-    private void InitAMove() {
+    void InitAMove() {
         startPos = points[pointIndex].pos;
-        endPos = pointIndex == points.Count - 1 ? points[0].pos : points[pointIndex + 1].pos;
+        endPos = points[(pointIndex + 1) % points.Count].pos;
         movingTime = points[pointIndex].movingTime;
 
-        velocity = (endPos - startPos) / movingTime + Vector2.down;
-
-        if (player != null) {
-            player.RemoveVelocityModifier(name);
-            player.AddVelocityModifier(name, velocity);
-        }
+        rb2d.MovePosition(startPos);
+        rb2d.velocity = (endPos - startPos) / movingTime;
+        OnVelocityChanged?.Invoke();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.CompareTag("PlayerFoot")) {
-            player = collision.GetComponentInParent<PlayerController>();
-            if (player != null) {
-                player.AddVelocityModifier(name, velocity);
-            }
-        }
-    }
+    //private void FixedUpdate() {
+    //    if (timer == 0f)
+    //        InitAMove();
 
-    private void OnTriggerExit2D(Collider2D collision) {
-        if (collision.CompareTag("PlayerFoot")) {
-            if (player != null) {
-                player.RemoveVelocityModifier(name);
-                player = null;
-            }
-        }
-    }
+    //    timer += Time.fixedDeltaTime;
+    //    if (startPos != endPos) {
+    //        Vector2 newPos = Vector2.Lerp(startPos, endPos, timer / movingTime);
+    //        rb2d.MovePosition(newPos);
+    //    }
+
+    //    if (timer > movingTime) {
+    //        timer = 0f;
+    //        if (pointIndex == points.Count - 1)
+    //            pointIndex = 0;
+    //        else pointIndex++;
+    //    }
+    //}
+
+    //private void InitAMove() {
+    //    startPos = points[pointIndex].pos;
+    //    endPos = pointIndex == points.Count - 1 ? points[0].pos : points[pointIndex + 1].pos;
+    //    movingTime = points[pointIndex].movingTime;
+
+    //    velocity = (endPos - startPos) / movingTime + Vector2.down;
+
+    //    if (player != null) {
+    //        player.RemoveVelocityModifier(name);
+    //        player.AddVelocityModifier(name, velocity);
+    //    }
+    //}
 
     public ObjectData GetObjectData() {
         return new RepeatMovingTileData(pointIndex, timer);
@@ -123,5 +126,9 @@ public class RepeatMovingTileData : ObjectData {
     public RepeatMovingTileData(int pointIndex, float timer) {
         this.pointIndex = pointIndex;
         this.timer = timer;
+    }
+
+    public override ObjectData Clone() {
+        return new RepeatMovingTileData(pointIndex, timer);
     }
 }

@@ -162,4 +162,8 @@ public class ShooterFlowerData : ObjectData {
         this.isShooted = isShooted;
         this.reloadTimer = reloadTimer;
     }
+
+    public override ObjectData Clone() {
+        return new ShooterFlowerData(targetPos, canShoot, isShooted, reloadTimer);
+    }
 }

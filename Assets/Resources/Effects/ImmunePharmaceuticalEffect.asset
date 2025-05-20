@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectImage: {fileID: 21300000, guid: c3b8a7f910de27a4c9ff2df8710b977e, type: 3}
   infor: "Mi\u1EC5n nhi\u1EC5m c\xE1c hi\u1EC7u \u1EE9ng b\u1EA5t l\u1EE3i t\u1EEB
-    b\xEAn ngo\xE0i."
+    b\xEAn ngo\xE0i trong 5 gi\xE2y."
   priority: 1
   type: 0
   impact: 0
@@ -26,6 +26,7 @@ MonoBehaviour:
   count: 0
   hasAttention: 0
   timeRemainingList:
+  - 0
   - 0
   - 0
   - 0

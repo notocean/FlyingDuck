@@ -22,7 +22,6 @@ public class NextLevel : MonoBehaviour
         currentDialog.Close();
         if (levelManager.currentLevelIndex < levelManager.maxActiveLevelIndex) {
             levelManager.ChangeCurrentLevel(1);
-            Debug.Log(levelManager.currentLevelIndex);
             GameManager.Instance.ChangeScene(levelManager.currentLevelIndex + 1);
         }
         else GameManager.Instance.ChangeScene(0);

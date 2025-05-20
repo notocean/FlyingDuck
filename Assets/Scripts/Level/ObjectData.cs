@@ -2,7 +2,9 @@ using System;
 using UnityEngine;
 
 [SerializeField]
-public class ObjectData { }
+public abstract class ObjectData {
+    public abstract ObjectData Clone();
+}
 
 [Serializable]
 public class ObjectDataWrapper {
@@ -11,5 +13,9 @@ public class ObjectDataWrapper {
 
     public ObjectDataWrapper(ObjectData data) {
         this.data = data;
+    }
+
+    public ObjectDataWrapper Clone() {
+        return new ObjectDataWrapper(data.Clone());
     }
 }

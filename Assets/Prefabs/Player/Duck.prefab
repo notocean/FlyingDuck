@@ -174,9 +174,10 @@ GameObject:
   m_Component:
   - component: {fileID: 664164168815795557}
   - component: {fileID: 3144621491387733014}
+  - component: {fileID: 8587371883288972588}
   m_Layer: 7
   m_Name: LegCollider
-  m_TagString: Untagged
+  m_TagString: PlayerFoot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -231,6 +232,19 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.4, y: 0.11}
   m_Direction: 1
+--- !u!114 &8587371883288972588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2886020341284213700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38b24bdb28cbfc74ab354be773324e35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effect: {fileID: 11400000, guid: 73a7ce82358e5e443b82061fa50ee1d3, type: 2}
 --- !u!1 &6041746090813033678
 GameObject:
   m_ObjectHideFlags: 0
@@ -315,7 +329,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9133133695141136977
 Transform:
   m_ObjectHideFlags: 0
@@ -363,7 +377,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.00520009}
+  m_Offset: {x: 0, y: -0.005}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -447,11 +461,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: a44ff949e974e3d4ba369ae5b4ede224, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.6
+      value: -1.01
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: a44ff949e974e3d4ba369ae5b4ede224, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.67
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: a44ff949e974e3d4ba369ae5b4ede224, type: 3}
       propertyPath: m_LocalPosition.z
@@ -888,7 +902,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapSideTeleportEvent: {fileID: 11400000, guid: 8d0b0f68eba5a2c4eab4e54cb3ac9975, type: 2}
-  groundCheck: {fileID: 490846566862282640}
+  groundCheck: {fileID: 8587371883288972588}
   maxEnergy: 4
   baseEnergySpeed: 0.5
   baseWalkSpeed: 1

@@ -8,23 +8,23 @@ public class GroundCheck : MonoBehaviour
     public Action<bool> onGroundEvent;
     bool hasRegisterPos = false;
 
-    private void OnTriggerEnter2D(Collider2D collision) {
+    private void OnCollisionEnter2D(Collision2D collision) {
         onGroundEvent?.Invoke(true);
     }
 
-    private void OnTriggerStay2D(Collider2D collision) {
+    private void OnCollisionStay2D(Collision2D collision) {
         if (hasRegisterPos) return;
 
-        int posIndex = TileManager.Instance.GetPosIndexByName(collision.name);
+        int posIndex = TileManager.Instance.GetPosIndexByName(collision.gameObject.name);
         if (posIndex != -1) {
             hasRegisterPos = TileManager.Instance.RegisterPos(posIndex);
         }
         else hasRegisterPos = true;
     }
 
-    private void OnTriggerExit2D(Collider2D collision) {
+    private void OnCollisionExit2D(Collision2D collision) {
         onGroundEvent?.Invoke(false);
-        TileManager.Instance.UnregisterPos(TileManager.Instance.GetPosIndexByName(collision.name));
+        TileManager.Instance.UnregisterPos(TileManager.Instance.GetPosIndexByName(collision.gameObject.name));
     }
 
     public Effect GetEffect() => effect;

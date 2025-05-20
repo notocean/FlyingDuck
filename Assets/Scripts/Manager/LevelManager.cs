@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -57,12 +58,13 @@ public class LevelManager : DataManager {
         return levelData[currentLevelIndex];
     }
 
-    public LevelData GetDefaultLevelData() {
-        return defaultLevelData[currentLevelIndex];
+    public void SetDefaultLevelData(LevelData levelData) {
+        defaultLevelData[currentLevelIndex] = levelData.Clone();
     }
 
     public void ResetLevel() {
-        levelData[currentLevelIndex].objectDataWrapper = defaultLevelData[currentLevelIndex].objectDataWrapper;
+        levelData[currentLevelIndex] = defaultLevelData[currentLevelIndex].Clone();
+        SaveLevel();
     }
 
     public void SaveGeneral() {

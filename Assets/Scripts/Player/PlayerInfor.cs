@@ -140,4 +140,8 @@ public class PlayerData : ObjectData {
         this.energy = energy;
         this.onground = onground;
     }
+
+    public override ObjectData Clone() {
+        return new PlayerData(pos, viewDir, velocity, energy, onground);
+    }
 }

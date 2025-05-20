@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentLevelIndex: 0
   maxActiveLevelIndex: 0
-  maxAvaiableLevelIndex: 2
-  levelCount: 3
+  maxAvaiableLevelIndex: 3
+  levelCount: 4
   levelUISprites:
   - topSprite: {fileID: 21300000, guid: 9ce03fc0339e6a142a87297fa37c170c, type: 3}
     centerSprite: {fileID: 21300000, guid: fdc91c5c4dfc67a42904bd5f31146496, type: 3}
@@ -29,6 +29,10 @@ MonoBehaviour:
     centerSprite: {fileID: 21300000, guid: 28d839a0b8bff32469c167fbb5bc31e5, type: 3}
     leftSprite: {fileID: 21300000, guid: c9e2cd622ea20b14e8d2ac82216b809c, type: 3}
     rightSprite: {fileID: 21300000, guid: 5f6083482ebe55d4aa2101e8fca63501, type: 3}
+  - topSprite: {fileID: 21300000, guid: 3abc4e74510797a459471bc0f8b0d89e, type: 3}
+    centerSprite: {fileID: 21300000, guid: 554abdd3257f7364da8a1c65df9babaf, type: 3}
+    leftSprite: {fileID: 21300000, guid: 5fa8e8f86247077488862663cd66282a, type: 3}
+    rightSprite: {fileID: 21300000, guid: f7e2548458d63054b8fa31feae73a319, type: 3}
   defaultLevelData:
   - index: 0
     isSaved: 0
@@ -45,6 +49,11 @@ MonoBehaviour:
     objectDataWrapper:
       keys: []
       values: []
+  - index: 3
+    isSaved: 0
+    objectDataWrapper:
+      keys: []
+      values: []
   levelData:
   - index: 0
     isSaved: 0
@@ -57,6 +66,11 @@ MonoBehaviour:
       keys: []
       values: []
   - index: 2
+    isSaved: 0
+    objectDataWrapper:
+      keys: []
+      values: []
+  - index: 3
     isSaved: 0
     objectDataWrapper:
       keys: []

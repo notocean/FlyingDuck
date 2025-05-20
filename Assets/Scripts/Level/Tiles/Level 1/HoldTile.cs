@@ -29,19 +29,19 @@ public class HoldTile : MonoBehaviour, ISaveableObject
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision) {
-        if (collision.CompareTag("PlayerFoot") && canHold) {
-            playerEffectHandler = collision.GetComponentInParent<PlayerEffectHandler>();
+    private void OnCollisionStay2D(Collision2D collision) {
+        if (collision.collider.CompareTag("PlayerFoot") && canHold) {
+            playerEffectHandler = collision.gameObject.GetComponent<PlayerEffectHandler>();
             if (playerEffectHandler != null ) {
                 Hold(playerEffectHandler);
             }
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision) {
-        if (collision.CompareTag("PlayerFoot")) {
+    private void OnCollisionExit2D(Collision2D collision) {
+        if (collision.collider.CompareTag("PlayerFoot")) {
             if (playerEffectHandler != null) {
-                if (playerEffectHandler == collision.gameObject.GetComponentInParent<PlayerEffectHandler>()) {
+                if (playerEffectHandler == collision.gameObject.GetComponent<PlayerEffectHandler>()) {
                     if (isHolding) {
                         animator.SetBool("Hold", false);
                         StopHold();
@@ -118,5 +118,9 @@ public class HoldTileData : ObjectData {
         this.playerName = playerName;
         this.holdTimer = holdTimer;
         this.refreshTimer = refreshTimer;
+    }
+
+    public override ObjectData Clone() {
+        return new HoldTileData(playerName, holdTimer, refreshTimer);
     }
 }

@@ -23,8 +23,8 @@ public class BrokenTile : MonoBehaviour, ISaveableObject
         LevelDataManager.Instance.RegisterSaveableObject(name, this);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.CompareTag("PlayerFoot") && state == BrokenTileState.Idle) {
+    private void OnCollisionEnter2D(Collision2D collision) {
+        if (collision.collider.CompareTag("PlayerFoot") && state == BrokenTileState.Idle) {
             StartCoroutine(CountDownToBreak());
         }
     }
@@ -93,5 +93,9 @@ public class BrokenTileData : ObjectData {
     public BrokenTileData(BrokenTileState state, float timer) {
         this.state = state;
         this.timer = timer;
+    }
+
+    public override ObjectData Clone() {
+        return new BrokenTileData(state, timer);
     }
 }

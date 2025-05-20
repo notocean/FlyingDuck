@@ -52,11 +52,11 @@ TagManager:
   - name: GroundTile
     uniqueID: 1089824119
     locked: 0
-  - name: Animal
-    uniqueID: 3063228427
-    locked: 0
   - name: Plant
     uniqueID: 3807429631
+    locked: 0
+  - name: Animal
+    uniqueID: 3063228427
     locked: 0
   - name: UI
     uniqueID: 1594086511
@@ -68,5 +68,5 @@ TagManager:
     uniqueID: 2793114775
     locked: 0
   - name: UI1
-    uniqueID: 839408467
+    uniqueID: 3597104563
     locked: 0

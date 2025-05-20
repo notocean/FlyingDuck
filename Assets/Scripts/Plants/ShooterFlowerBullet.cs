@@ -107,4 +107,8 @@ public class ShooterFlowerBulletData : ObjectData {
         this.pos = pos;
         this.velocity = velocity;
     }
+
+    public override ObjectData Clone() {
+        return new ShooterFlowerBulletData (isVisible, pos, velocity);
+    }
 }

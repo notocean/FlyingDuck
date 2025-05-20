@@ -4,18 +4,18 @@ public class MudTile : MonoBehaviour
 {
     [SerializeField] MudEffect mudEffect;
 
-    private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.CompareTag("PlayerFoot")) {
-            IEffectHandler effectHandler = collision.GetComponentInParent<IEffectHandler>();
+    private void OnCollisionEnter2D(Collision2D collision) {
+        if (collision.collider.CompareTag("PlayerFoot")) {
+            IEffectHandler effectHandler = collision.gameObject.GetComponent<IEffectHandler>();
             if (effectHandler != null) {
                 effectHandler.AddEffect(mudEffect);
             }
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision) {
-        if (collision.CompareTag("PlayerFoot")) {
-            IEffectHandler effectHandler = collision.GetComponentInParent<IEffectHandler>();
+    private void OnCollisionExit2D(Collision2D collision) {
+        if (collision.collider.CompareTag("PlayerFoot")) {
+            IEffectHandler effectHandler = collision.gameObject.GetComponent<IEffectHandler>();
             if (effectHandler != null) {
                 effectHandler.RemoveEffect(mudEffect);
             }
